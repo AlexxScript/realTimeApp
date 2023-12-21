@@ -1,0 +1,11 @@
+in docker: docker run --name realTimeP -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
+
+CREATE DATABASE messageapp;
+
+CREATE TABLE user (
+    idUser SERIAL PRIMARY KEY,
+    emailUser VARCHAR(200) UNIQUE,
+    username VARCHAR(200) UNIQUE,
+    rol VARCHAR(200),
+    password VARCHAR(100)
+);
