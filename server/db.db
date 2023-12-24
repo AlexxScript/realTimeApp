@@ -1,11 +1,38 @@
 in docker: docker run --name realTimeP -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 
-CREATE DATABASE messageapp;
+CREATE DATABASE school_cafeteria;
 
-CREATE TABLE user (
-    idUser SERIAL PRIMARY KEY,
-    emailUser VARCHAR(200) UNIQUE,
-    username VARCHAR(200) UNIQUE,
-    rol VARCHAR(200),
+CREATE TABLE users (
+    id_users SERIAL PRIMARY KEY,
+    email_users VARCHAR(200) UNIQUE,
+    users_name VARCHAR(200) UNIQUE,
+    role VARCHAR(100),
     password VARCHAR(100)
+);
+
+CREATE TABLE orders (
+    id_orders SERIAL PRIMARY KEY,
+    id_users INT,
+    orders_content TEXT,
+    orders_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_amount DECIMAL(10, 2),
+    is_completed BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (id_users) REFERENCES users(id_users)
+);
+
+CREATE TABLE menu_items (
+    id_item SERIAL PRIMARY KEY,
+    item_name VARCHAR(200),
+    description TEXT,
+    price DECIMAL(10,2),
+    avalible BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE orders_items (
+    orders_id_item SERIAL PRIMARY KEY,
+    id_orders INT,
+    id_item INT,
+    quantity INT,
+    FOREIGN KEY (id_orders) REFERENCES orders(id_orders),
+    FOREIGN KEY (id_item) REFERENCES menu_items(id_item)
 );
