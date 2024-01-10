@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "./socket/socket";
+import { ConnectionManager } from "./components/ConectionManager";
 
 export const App = () => {
 
     const [isConnected, setIsConnected] = useState(socket.connected);
 
     useEffect(() => {
-        function onConnected() {
-            setIsConnected(true);
+        function updateConnectionStatus() {
+            setIsConnected(socket.connected);
         }
-        function onDisconnected() {
-            setIsConnected(false);
-        }
-        socket.on('connect', onConnected);
-        socket.on('disconnect', onDisconnected);
+        setIsConnected(socket.connected);
+        socket.on('connect', updateConnectionStatus);
+        socket.on('disconnect', updateConnectionStatus);
 
         return () => {
-            socket.off('connect', onConnected);
-            socket.off('disconnect', onDisconnected);
+            socket.off('connect', updateConnectionStatus);
+            socket.off('disconnect', updateConnectionStatus);
         };
 
     }, []);
 
 
     return (
-        <h1>Hola desde app {isConnected}</h1>
+        <>
+            <h1>Hola desde app, state: {isConnected ? 'Conectado' : 'Desconectado'}</h1>
+            <ConnectionManager />
+        </>
     )
 }
 
