@@ -5,7 +5,9 @@ import cors from "cors";
 import { Server } from "socket.io";
 import dotenv from "dotenv/config";
 import homeRoute from "./routes/homeRoute.js";
+import userRoute from "./routes/userRoute.js";
 
+//https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
 const app = express();
 const httpServer = new createServer(app);
 
@@ -27,6 +29,7 @@ app.use(cors({
 app.use(morgan("tiny"));
 
 app.use("/",homeRoute);
+app.use("/user",userRoute);
 
 io.on('connection',(socket) => {
     console.log(`Socket connected: ${socket.id}`);
@@ -37,6 +40,12 @@ io.on('connection',(socket) => {
 
     socket.on("error", (err) => {
         console.error(`Socket error: ${err.message}`);
+    });
+
+    socket.on("join_room:client",(data)=>{
+        const {userName,room} = data;
+        console.log(room,userName);
+        socket.join(room);
     });
 });
 

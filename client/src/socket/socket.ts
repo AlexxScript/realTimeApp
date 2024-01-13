@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 
 const URL = "http://localhost:8080/"; 
 
-export const socket:Socket = io(URL,{
-    autoConnect:false
-})
+// export const socket:Socket = io(URL,{
+//     autoConnect:false
+// })
+
+
+export const socket:Socket = io(URL)
