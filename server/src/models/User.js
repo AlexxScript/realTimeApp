@@ -40,4 +40,17 @@ export class User {
             connection.release();
         }
     }
+
+    async selectUser (userEmail){
+        const connection = await pool.connect();
+        try {
+            const qy = 'SELECT * FROM users WHERE email_users = $1';
+            const consulta = await connection.query(qy,[userEmail]);
+            return consulta;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            connection.release();
+        }
+    }
 }
