@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 import { createServer } from "node:http";
 import cors from "cors";
 import { Server } from "socket.io";
@@ -25,9 +26,12 @@ app.use(cors({
     "optionsSuccessStatus": 204,
     credentials:true
 }));
-
+app.use(express.json());
+app.use(cookieParser());
 app.use(morgan("tiny"));
+app.use(express.urlencoded({ extended: true }));
 
+//-----------------ROUTES------------------
 app.use("/",homeRoute);
 app.use("/user",userRoute);
 
