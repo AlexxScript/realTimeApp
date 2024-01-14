@@ -15,11 +15,11 @@ export class User {
         }
     }
 
-    async usersSelectAll() {
+    async usersSelectAll(idSchool) {
         const connection = await pool.connect();
         try {
-            const qy = 'SELECT * FROM users';
-            const consulta = await connection.query(qy);
+            const qy = 'SELECT * FROM users WHERE school_id = $1';
+            const consulta = await connection.query(qy,[idSchool]);
             return consulta;
         } catch (error) {
             console.log(error);

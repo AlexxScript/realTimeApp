@@ -4,26 +4,22 @@ import { createToken } from "../libs/jToken.js";
 
 export const createUser = async (req, res) => {
     try {
-        const { userEmail, userName, password, repeatPassword } = req.body;
+        const { userEmail, userName, password, repeatPassword, idCafe } = req.body;
         const user = new User();
         const saltRounds = 10;
-        if (password != repeatPassword) return res.status(400).json({ message: 'password does not match' });
         if (userEmail.trim() === '' || userName.trim() === '' || password.trim() === '' || repeatPassword.trim() === '') {
             return res.status(400).json({ message: "Field empty" })
         };
+        if (password != repeatPassword) return res.status(400).json({ message: 'password does not match' });
         const checkExis = await user.usersExist(userEmail, userName);
         if (checkExis.rows.length > 0) return res.status(400).json({ message: "User name or email already exists" });
         const pass = await bcrypt.hash(password, saltRounds);
-
-//------------------REMOVE THIS LOGIC--------------------------------
-        const checkAll = await user.usersSelectAll();
+        const checkAll = await user.usersSelectAll(idCafe);
         if (checkAll.rows.length <= 0) {
-            await user.create(userEmail, userName, 'ADMIN', pass);
+            await user.create(userEmail, userName, 'ADMIN', pass,idCafe);
             return res.status(200).json({ message: "usercreated" });
-        }
-//--------------------------------------------------------------------        
-        
-        await user.create(userEmail, userName, 'CLIENT', pass);
+        }    
+        await user.create(userEmail, userName, 'CLIENT', pass,idCafe);
         return res.status(200).json({ message: "usercreated" });
     } catch (error) {
         console.log(error);
