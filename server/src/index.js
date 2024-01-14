@@ -7,6 +7,7 @@ import { Server } from "socket.io";
 import dotenv from "dotenv/config";
 import homeRoute from "./routes/homeRoute.js";
 import userRoute from "./routes/userRoute.js";
+import schoolRoute from "./routes/schoolRoute.js";
 
 //https://www.freecodecamp.org/news/build-a-realtime-chat-app-with-react-express-socketio-and-harperdb/#how-rooms-work-in-socket-io
 const app = express();
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 //-----------------ROUTES------------------
 app.use("/",homeRoute);
 app.use("/user",userRoute);
+app.use("/school",schoolRoute);
 
 io.on('connection',(socket) => {
     console.log(`Socket connected: ${socket.id}`);

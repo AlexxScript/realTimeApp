@@ -2,22 +2,33 @@ in docker: docker run --name realTimeP -p 5432:5432 -e POSTGRES_PASSWORD=mysecre
 
 CREATE DATABASE school_cafeteria;
 
+\c school_cafeteria;
+
+CREATE TABLE school (
+    id_school SERIAL PRIMARY KEY,
+    school_name VARCHAR(100),
+    password_school VARCHAR(100)
+);
+
 CREATE TABLE users (
     id_users SERIAL PRIMARY KEY,
     email_users VARCHAR(200) UNIQUE,
     users_name VARCHAR(200) UNIQUE,
     role VARCHAR(100),
-    password VARCHAR(100)
+    password VARCHAR(100),
+    school_id INT REFERENCES school(id_school) ON DELETE CASCADE
 );
 
 CREATE TABLE orders (
     id_orders SERIAL PRIMARY KEY,
-    id_users INT,
+    user_id INT,
+    school_id INT,
     orders_content TEXT,
     orders_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount DECIMAL(10, 2),
     is_completed BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (id_users) REFERENCES users(id_users)
+    FOREIGN KEY (user_id) REFERENCES users(id_users),
+    FOREIGN KEY (school_id) REFERENCES school(id_school)
 );
 
 CREATE TABLE menu_items (
@@ -25,7 +36,9 @@ CREATE TABLE menu_items (
     item_name VARCHAR(200),
     description TEXT,
     price DECIMAL(10,2),
-    avalible BOOLEAN DEFAULT TRUE
+    available BOOLEAN DEFAULT TRUE,
+    school_id INT REFERENCES school(id_school),
+    user_id INT REFERENCES users(id_users)
 );
 
 CREATE TABLE orders_items (
