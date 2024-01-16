@@ -36,7 +36,7 @@ export const logInUSer = async (req, res) => {
         if (userSelect.rows.length <= 0) return res.status(400).json({ message: "Email does not exist" });
         const checkPass = await bcrypt.compare(password, userSelect.rows[0].password);
         if (!checkPass) return res.status(400).json("Wrong password");
-        const token = createToken(userSelect.rows[0].email_users, userSelect.rows[0].users_name, userSelect.rows[0].role);
+        const token = createToken(userSelect.rows[0].users_name, userSelect.rows[0].role,userSelect.rows[0].school_id);
         res.cookie("token", token, {
             sameSite: 'none',
         });

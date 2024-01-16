@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const LoginUser = () => {
+export const RegisterSchool = () => {
     return (
         <form action="">
-            login
+            register School
         </form>
-    )
+    );
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { socket } from "./socket/socket";
-import { ConnectionManager } from "./components/ConectionManager";
 
 export const App = () => {
 
@@ -14,18 +13,13 @@ export const App = () => {
         socket.on('connect', updateConnectionStatus);
         socket.on('disconnect', updateConnectionStatus);
 
-        return () => {
-            socket.off('connect', updateConnectionStatus);
-            socket.off('disconnect', updateConnectionStatus);
-        };
-
+        console.log(socket.connected);
     }, []);
 
 
     return (
         <>
             <h1>Hola desde app, state: {isConnected ? 'Conectado' : 'Desconectado'}</h1>
-            <ConnectionManager />
         </>
     )
 }
