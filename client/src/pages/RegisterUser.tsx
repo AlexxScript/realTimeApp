@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { socket } from '../socket/socket.ts';
+import { useParams } from 'react-router-dom';
+
 
 export const RegisterUser = () => {
-    useEffect(()=>{
-        socket.on('connect',()=>{
-            console.log(socket.connected);
-        })
-    },[])
+    const { idSchool } = useParams();
+
     return (
         <form action="">
             register

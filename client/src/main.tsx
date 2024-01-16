@@ -7,6 +7,7 @@ import { JoinRoom } from './pages/JoinRoom';
 import { MakeOrders } from './pages/MakeOrders';
 import { LoginUser } from './pages/LogInUser';
 import { RegisterUser } from './pages/RegisterUser';
+import { RegisterSchool } from './pages/RegisterSchool';
 
 const router = createBrowserRouter([
     {
@@ -22,8 +23,11 @@ const router = createBrowserRouter([
         path:"/login",
         element:<LoginUser/>
     },{
-        path:"/register",
+        path:"/register/:idSchool",
         element:<RegisterUser/>
+    },{
+        path:"/newschool",
+        element:<RegisterSchool/>
     }
 ])
 

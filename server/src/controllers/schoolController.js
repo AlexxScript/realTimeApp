@@ -13,8 +13,9 @@ export const createSchool = async (req, res) => {
         if (existS.rows.length > 0) return res.status(400).json({ message: "School name already exists" });
         if (passwordSchool != repeatPasswordSchool) return res.status(400).json({ message: "Passwords does not match" });
         const encryptPass = await bcrypt.hash(passwordSchool, saltRounds);
-        await school.createSchool(schoolName, encryptPass);
-        return res.status(200).json({ message: "School created" });
+        const data = await school.createSchool(schoolName, encryptPass);
+        console.log(data)
+        return res.status(200).json({ message: "School created",schoolD:data });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Internal server error" });
