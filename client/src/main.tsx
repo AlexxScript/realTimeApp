@@ -5,6 +5,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from './App';
 import { JoinRoom } from './pages/JoinRoom';
 import { MakeOrders } from './pages/MakeOrders';
+import { LoginUser } from './pages/LogInUser';
+import { RegisterUser } from './pages/RegisterUser';
 
 const router = createBrowserRouter([
     {
@@ -16,6 +18,12 @@ const router = createBrowserRouter([
     },{
         path:'/order',
         element:<MakeOrders/>
+    },{
+        path:"/login",
+        element:<LoginUser/>
+    },{
+        path:"/register",
+        element:<RegisterUser/>
     }
 ])
 

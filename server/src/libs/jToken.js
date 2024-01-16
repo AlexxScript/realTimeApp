@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv/config";
 
-export function createToken(email, userName, role) {
+export function createToken(email, role, idSchool) {
     const token = jwt.sign(
         {
             email,
-            userName,
-            role
+            role,
+            idSchool
         },
         process.env.JWT_SECRET
     );
