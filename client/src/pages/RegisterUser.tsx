@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { socket } from '../socket/socket.ts';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { FormKeyCafe } from '../components/FormKeyCafe';
+import { FormRegisterUser } from '../components/FormRegisterUser';
 
 
 export const RegisterUser = () => {
-    const { idSchool } = useParams();
-
     return (
-        <form action="">
-            register
-        </form>
+        <div>
+            <FormRegisterUser/>
+            <FormKeyCafe/>
+        </div>
+
     );
 }

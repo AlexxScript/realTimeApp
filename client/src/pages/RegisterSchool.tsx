@@ -9,7 +9,6 @@ export const RegisterSchool = () => {
         repeatPasswordSchool:''
     });
     const [change,setChange] = useState(false);
-    const [idSchool, setIdSchool] = useState(-0);
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFields({
@@ -31,14 +30,13 @@ export const RegisterSchool = () => {
             const data = await res.json();
             console.log(data);
             if(data.message === 'School created') 
-                setChange(true)
-                setIdSchool(data.schoolD)
+                setChange(true);
         } catch (error) {
             console.log(error);
         }
     }
 
-    if (change) return <Navigate to={`/register/${idSchool}`}/>
+    if (change) return <Navigate to={`/register`}/>
 
     return (
         <form onSubmit={handleSubmit}>
