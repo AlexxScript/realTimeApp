@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
-import { socket } from '../socket/socket.ts';
+import React from 'react';
+import { FormKeyCafe } from '../components/FormKeyCafe';
+import { FormRegisterUser } from '../components/FormRegisterUser';
+
 
 export const RegisterUser = () => {
-    useEffect(()=>{
-        socket.on('connect',()=>{
-            console.log(socket.connected);
-        })
-    },[])
     return (
-        <form action="">
-            register
-        </form>
+        <div>
+            <FormRegisterUser/>
+            <FormKeyCafe/>
+        </div>
+
     );
 }
