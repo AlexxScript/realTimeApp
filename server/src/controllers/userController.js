@@ -36,11 +36,11 @@ export const logInUSer = async (req, res) => {
         if (userSelect.rows.length <= 0) return res.status(400).json({ message: "Email does not exist" });
         const checkPass = await bcrypt.compare(password, userSelect.rows[0].password);
         if (!checkPass) return res.status(400).json("Wrong password");
-        const token = createToken(userSelect.rows[0].users_name, userSelect.rows[0].role,userSelect.rows[0].school_id);
+        const token = createToken(userSelect.rows[0].email_users, userSelect.rows[0].role,userSelect.rows[0].school_id);
         res.cookie("token", token, {
             sameSite: 'none',
         });
-        res.json({ message: "succes", token, state: "authenticated" });
+        res.json({ message: "succes", token,rol:userSelect.rows[0].role,userE:userSelect.rows[0].users_name });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "Internal server error", state:"unauthenticated" });
