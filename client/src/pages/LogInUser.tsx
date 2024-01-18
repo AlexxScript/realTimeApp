@@ -33,18 +33,17 @@ export const LoginUser = () => {
             contextAu.setUser({
                 authenticated: true,
                 email: data.email,
-                role: data.rol,
+                role: data.role,
                 idSchool:data.idSchool
             })
-            console.log(contextAu);
         } catch (error) {
             console.log(error);
         }
     }
 
-    // if (contextAu.user.authenticated) {
-    //     return <Navigate to="/" />
-    // }
+    if (contextAu.user.authenticated === true) {
+        return <Navigate to="/" replace/>
+    }
 
     return (
         <form onSubmit={handleSubmit}>

@@ -16,7 +16,7 @@ const io = initializeSocketIO(httpServer);
 const port = process.env.PORT ?? 8081;
 
 app.use(cors({
-    "origin": "http://localhost:5173",
+    "origin": "http://localhost:3000",
     "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
     "preflightContinue": false,
     "optionsSuccessStatus": 204,
