@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 export const LoginUser = () => {
+
+    const contextAu = useContext(AuthContext);
     
     const [fields,setFields] = useState({
         userEmail:"",
