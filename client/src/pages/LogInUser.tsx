@@ -1,38 +1,50 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 export const LoginUser = () => {
 
     const contextAu = useContext(AuthContext);
-    
-    const [fields,setFields] = useState({
-        userEmail:"",
-        password:""
+
+    const [fields, setFields] = useState({
+        userEmail: "",
+        password: ""
     });
 
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFields({
             ...fields,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.value
         });
     }
 
-    const handleSubmit = async (e:React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:8080/user/login',{
-                method:'POST',
-                headers:{
-                    "Content-Type":"application/json"
+            const res = await fetch('http://localhost:8080/user/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                body:JSON.stringify(fields)
+                body: JSON.stringify(fields)
             });
             const data = await res.json();
-            console.log(data);
+            contextAu.setUser({
+                authenticated: true,
+                email: data.email,
+                role: data.rol,
+                idSchool:data.idSchool
+            })
+            console.log(contextAu);
         } catch (error) {
             console.log(error);
         }
     }
+
+    // if (contextAu.user.authenticated) {
+    //     return <Navigate to="/" />
+    // }
 
     return (
         <form onSubmit={handleSubmit}>
