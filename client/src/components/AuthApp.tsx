@@ -43,6 +43,9 @@ export const AuthApp = () => {
                     credentials: "include"
                 });
                 const data = await res.json();
+                // setUser({
+                //     authenticated:data.
+                // })
                 console.log(data);
                 return data
             } catch (error: any) {

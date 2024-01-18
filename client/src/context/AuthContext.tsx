@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
 interface UserState {
-    authenticated:boolean,
-    userN:string
+    authenticated:boolean
+    email:string
     role:string
+    idSchool:any
 }
 
 interface AuthContextType {
@@ -13,8 +14,9 @@ interface AuthContextType {
 
 const defaultUserState: UserState = {
     authenticated:false,
-    userN:'',
-    role:''
+    email:'',
+    role:'',
+    idSchool:null
 }
 
 export const AuthContext = createContext<AuthContextType>({
