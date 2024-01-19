@@ -33,8 +33,9 @@ const router = createBrowserRouter([
 export const AuthApp = () => {
     const [user, setUser] = useState({
         authenticated: false,
-        userN: '',
-        role: ''
+        email: '',
+        role: '',
+        idSchool:null
     });
     useEffect(() => {
         const loadData = async () => {
@@ -43,9 +44,12 @@ export const AuthApp = () => {
                     credentials: "include"
                 });
                 const data = await res.json();
-                // setUser({
-                //     authenticated:data.
-                // })
+                setUser({
+                    authenticated:data.authenticated,
+                    email:data.email,
+                    role:data.role,
+                    idSchool:data.idSchool
+                })
                 console.log(data);
                 return data
             } catch (error: any) {

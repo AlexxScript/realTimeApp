@@ -5,7 +5,7 @@ let io;
 const initializeSocketIO = (httpServer) => {
     const io = new SocketIOServer(httpServer, {
         cors: {
-            origin: "http://localhost:5173"
+            origin: "http://localhost:3000"
         }
     });
 
@@ -20,10 +20,11 @@ const initializeSocketIO = (httpServer) => {
             console.error(`Socket error: ${err.message}`);
         });
 
-        socket.on("join_room:client", (data) => {
-            const { userName, room } = data;
-            console.log(room, userName);
+        socket.on("joinRoomClient", (data) => {
+            const { room, email } = data;
+            console.log(`User ${socket.id} joined room ${room} with email ${email}`);
             socket.join(room);
+            io.to(room).emit("welcomeMessageServer",{email:email});
         });
     });
 
