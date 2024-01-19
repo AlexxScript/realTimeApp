@@ -30,12 +30,14 @@ export const LoginUser = () => {
                 body: JSON.stringify(fields)
             });
             const data = await res.json();
-            contextAu.setUser({
-                authenticated: true,
-                email: data.email,
-                role: data.role,
-                idSchool:data.idSchool
-            })
+            if (data.message === 'succes') {
+                contextAu.setUser({
+                    authenticated: true,
+                    email: data.email,
+                    role: data.role,
+                    idSchool:data.idSchool
+                });
+            }
         } catch (error) {
             console.log(error);
         }
