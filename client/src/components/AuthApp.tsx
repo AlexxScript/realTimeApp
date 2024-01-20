@@ -26,7 +26,13 @@ const router = createBrowserRouter([
         element: <RegisterSchool />
     },{
         path:"/dashboard",
-        element: <Dashboard/>
+        element: <Dashboard/>,
+        children:[
+            {
+                path:'/dashboard',
+                element:''
+            }
+        ]
     }
 ])
 

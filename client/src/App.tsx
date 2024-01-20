@@ -5,7 +5,7 @@ import { AuthContext } from "./context/AuthContext";
 export const App = () => {
 
     const contextAu = useContext(AuthContext);
-
+    const [loadingS,setLoadingS] = useState<boolean>(true);
     const [messageW, setMessageW] = useState<{email:string}[]>([]);
 
     useEffect(() => {
@@ -23,6 +23,16 @@ export const App = () => {
             socket.off('welcomeMessageServer');
         };
     }, [socket, contextAu.user.idSchool, contextAu.user.email, contextAu.user.authenticated]);
+
+    useEffect(()=>{
+        if (contextAu.user.idSchool !== null) {
+            setLoadingS(false);
+        }
+    },[contextAu.user.idSchool])
+
+    if (loadingS) {
+        return <h1>Loading...</h1>
+    }
 
     if (contextAu.user.authenticated) {
         return (
