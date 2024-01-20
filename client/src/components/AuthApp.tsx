@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from '../App';
 import { JoinRoom } from '../pages/JoinRoom';
-import { MakeOrders } from '../pages/MakeOrders';
 import { LoginUser } from '../pages/LogInUser';
 import { RegisterUser } from '../pages/RegisterUser';
 import { RegisterSchool } from '../pages/RegisterSchool';
 import { AuthContext } from '../context/AuthContext';
+import { Dashboard } from '../pages/Dashboard';
 
 const router = createBrowserRouter([
     {
@@ -16,9 +16,6 @@ const router = createBrowserRouter([
         path: '/home',
         element: <JoinRoom />
     }, {
-        path: '/order',
-        element: <MakeOrders />
-    }, {
         path: "/login",
         element: <LoginUser />
     }, {
@@ -27,6 +24,9 @@ const router = createBrowserRouter([
     }, {
         path: "/newschool",
         element: <RegisterSchool />
+    },{
+        path:"/dashboard",
+        element: <Dashboard/>
     }
 ])
 
