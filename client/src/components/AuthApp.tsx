@@ -7,6 +7,7 @@ import { RegisterUser } from '../pages/RegisterUser';
 import { RegisterSchool } from '../pages/RegisterSchool';
 import { AuthContext } from '../context/AuthContext';
 import { Dashboard } from '../pages/Dashboard';
+import { ManageOrders } from './ManageOrders';
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
         children:[
             {
                 path:'/dashboard',
-                element:''
+                element:<ManageOrders/>
             }
         ]
     }
