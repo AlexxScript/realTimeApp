@@ -49,3 +49,5 @@ CREATE TABLE orders_items (
     FOREIGN KEY (id_orders) REFERENCES orders(id_orders),
     FOREIGN KEY (id_item) REFERENCES menu_items(id_item)
 );
+
+ALTER TABLE menu_items DROP COLUMN user_id;

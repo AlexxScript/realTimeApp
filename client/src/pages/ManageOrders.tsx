@@ -18,7 +18,6 @@ export const ManageOrders = () => {
         socket.on('welcomeMessageServer', (data) => {
             setMessage((prevMessage) => [...prevMessage, data])
         });
-        console.log(message);
         return () => {
             socket.off('welcomeMessageServer');
         }
