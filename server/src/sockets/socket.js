@@ -26,6 +26,10 @@ const initializeSocketIO = (httpServer) => {
             socket.join(room);
             io.to(room).emit("welcomeMessageServer",{email:email});
         });
+        socket.on('createLunchCliente',(data)=>{
+            const { nameLunch,descriptionLunch,priceLunch,availableLunch } = data;
+            console.log(nameLunch,descriptionLunch,priceLunch,availableLunch)
+        })
     });
 
     return io;

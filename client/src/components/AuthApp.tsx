@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { App } from '../App';
-import { JoinRoom } from '../pages/JoinRoom';
 import { LoginUser } from '../pages/LogInUser';
 import { RegisterUser } from '../pages/RegisterUser';
 import { RegisterSchool } from '../pages/RegisterSchool';
@@ -14,9 +13,6 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <App />
-    }, {
-        path: '/home',
-        element: <JoinRoom />
     }, {
         path: "/login",
         element: <LoginUser />
