@@ -1,12 +1,17 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { socket } from "../socket/socket";
+import { AuthContext } from "../context/AuthContext";
 
 export const FormCreateLunch = () => {
+
+    const contextAu = useContext(AuthContext);
+    const [message,setMessage] = useState('');
+
     const [fields, setFields] = useState({
         nameLunch: "",
         descriptionLunch: "",
         priceLunch: 0,
-        availableLunch: false
+        availableLunch: false,
     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +38,17 @@ export const FormCreateLunch = () => {
             nameLunch:fields.nameLunch,
             descriptionLunch:fields.descriptionLunch,
             priceLunch:fields.priceLunch,
-            availableLunch:fields.availableLunch 
-        })
+            availableLunch:fields.availableLunch,
+            idSchool:contextAu.user.idSchool
+        });
+        socket.on('existItemMessageServer',(data) => {
+            setMessage(data.message);
+        });
+        socket.on('messageCreatedSuccesServer',(data) => {
+            setMessage(data.message);
+        });
+        socket.off('existItemMessageServer')
+        socket.off('messageCreatedSuccesServer')
     };
 
     return (
@@ -75,6 +89,7 @@ export const FormCreateLunch = () => {
                 />
             </div>
             <button type="submit">Create</button>
+            {message}
         </form>
     );
 };

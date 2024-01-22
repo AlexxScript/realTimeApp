@@ -1,4 +1,5 @@
 import { Server as SocketIOServer } from 'socket.io';
+import { MenuItems } from '../models/MenuItems.js';
 
 let io;
 
@@ -24,15 +25,28 @@ const initializeSocketIO = (httpServer) => {
             const { room, email } = data;
             console.log(`User ${socket.id} joined room ${room} with email ${email}`);
             socket.join(room);
-            io.to(room).emit("welcomeMessageServer",{email:email});
+            io.to(room).emit("welcomeMessageServer", { email: email });
         });
-        socket.on('createLunchCliente',(data)=>{
-            const { nameLunch,descriptionLunch,priceLunch,availableLunch } = data;
-            console.log(nameLunch,descriptionLunch,priceLunch,availableLunch)
+        socket.on('createLunchCliente', async (data) => {
+            const { nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool } = data;
+            console.log(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
+            const parseId = parseInt(idSchool)
+            try {
+                const menuItems = new MenuItems();
+                const checkExis = await menuItems.consultItem(nameLunch, parseId);
+                if (checkExis.rows.length > 0) {
+                    socket.emit('existItemMessageServer', { message: "Item exist in the menu" })
+                } else {
+                    const create = await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
+                    socket.emit("messageCreatedSuccesServer",{message:"Created succesfully"});
+                }
+            } catch (error) {
+                console.log(error);
+            }
         })
     });
 
     return io;
 };
 
-export {initializeSocketIO,io};
+export { initializeSocketIO, io };
