@@ -1,18 +1,66 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { socket } from "../socket/socket";
+import { AuthContext } from "../context/AuthContext";
 
-interface LunchListProps {
-  data: any[]; // Adjust the type based on your actual data structure
+interface ListItem {
+    item_name: string,
+    description:string,
+    price:any,
+    available:boolean
 }
 
-export const ListItems: React.FC<LunchListProps> = ({ data }) => {
-  return (
-    <ul>
-      {data.map((item, index) => (
-        <li key={index}>
-          {item.item_name} - {item.description} - {item.price} -{" "}
-          {item.available.toString()}
-        </li>
-      ))}
-    </ul>
-  );
+export const ListItems: React.FC = () => {
+    const contextAu = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<ListItem[]>([]);
+    const [message,setMessage] = useState('');
+
+    useEffect(() => {
+        socket.emit('listItemsClient', { room: contextAu.user.idSchool });
+
+        socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
+            setData(data.rows);
+            setLoading(false);
+        });
+
+        return () => {
+            socket.off('listItemsClient');
+            setData([]);
+            setLoading(true);
+        }
+    }, [socket, contextAu.user.idSchool]);
+
+    useEffect(() => {
+      socket.on('existItemMessageServer', (data) => {
+          setMessage(data.message);
+      });
+      socket.on('messageCreatedSuccesServer', (data) => {
+          setMessage(data.message);
+          socket.emit('listItemsClient', { room: contextAu.user.idSchool });
+          socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
+              setData(data.rows);
+              setLoading(false);
+          });
+      });
+      return () => {
+          socket.off('existItemMessageServer')
+          socket.off('messageCreatedSuccesServer')
+          socket.off('listItemsClient');
+      }
+  }, [socket, contextAu.user.idSchool])
+
+    return (
+        <div>
+          {message}
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <ul>
+                    {data.map((item, index) => (
+                        <li key={index}>{item.item_name+item.description+item.price+item.available}</li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
 };

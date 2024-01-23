@@ -1,77 +1,99 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import { socket } from "../socket/socket";
+import { AuthContext } from "../context/AuthContext";
 
-interface CreateLunchFormProps {
-  onSubmit: (formData: any) => void;
-}
+export const FormCreateLunch = () => {
 
-export const FormCreateLunch: React.FC<CreateLunchFormProps> = ({ onSubmit }) => {
-  const [fields, setFields] = useState({
-    nameLunch: "",
-    descriptionLunch: "",
-    priceLunch: 0,
-    availableLunch: false,
-  });
+    const contextAu = useContext(AuthContext);
+    const [message, setMessage] = useState('');
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const [fields, setFields] = useState({
+        nameLunch: "",
+        descriptionLunch: "",
+        priceLunch: 0,
+        availableLunch: false,
+    });
 
-    setFields((prevFields) => ({
-      ...prevFields,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+    useEffect(() => {
+        socket.on('existItemMessageServer', (data) => {
+            setMessage(data.message);
+        });
+        socket.on('messageCreatedSuccesServer', (data) => {
+            setMessage(data.message);
+        });
+        return () => {
+            socket.off('existItemMessageServer')
+            socket.off('messageCreatedSuccesServer')
+        }
+    }, [])
 
-  const handleChangeText = (e:ChangeEvent<HTMLTextAreaElement>) => {
-    setFields((prevField) => ({
-        ...prevField,
-        descriptionLunch:e.target.value
-    }))
-  }
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value, type, checked } = e.target;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit(fields);
-  };
+        setFields(prevFields => ({
+            ...prevFields,
+            [name]: type === "checkbox" ? checked : value
+        }));
+    };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="nameLunch">Lunch name</label>
-        <input
-          onChange={handleChange}
-          value={fields.nameLunch}
-          type="text"
-          name="nameLunch"
-        />
-      </div>
-      <div>
-        <label htmlFor="descriptionLunch">Lunch description</label>
-        <textarea
-          onChange={handleChangeText}
-          value={fields.descriptionLunch}
-          name="descriptionLunch"
-        />
-      </div>
-      <div>
-        <label htmlFor="priceLunch">Lunch price</label>
-        <input
-          onChange={handleChange}
-          value={fields.priceLunch}
-          type="number"
-          name="priceLunch"
-        />
-      </div>
-      <div>
-        <label htmlFor="availableLunch">Lunch available</label>
-        <input
-          onChange={handleChange}
-          checked={fields.availableLunch}
-          type="checkbox"
-          name="availableLunch"
-        />
-      </div>
-      <button type="submit">Create</button>
-    </form>
-  );
+    const handleChangeTextArea = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setFields(prevFields => ({
+            ...prevFields,
+            descriptionLunch: e.target.value
+        }));
+    };
+
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        socket.emit('createLunchCliente', {
+            nameLunch: fields.nameLunch,
+            descriptionLunch: fields.descriptionLunch,
+            priceLunch: fields.priceLunch,
+            availableLunch: fields.availableLunch,
+            idSchool: contextAu.user.idSchool
+        });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <label htmlFor="nameLunch">Lunch name</label>
+                <input
+                    onChange={handleChange}
+                    value={fields.nameLunch}
+                    type="text"
+                    name="nameLunch"
+                />
+            </div>
+            <div>
+                <label htmlFor="descriptionLunch">Lunch description</label>
+                <textarea
+                    onChange={handleChangeTextArea}
+                    value={fields.descriptionLunch}
+                    name="descriptionLunch"
+                />
+            </div>
+            <div>
+                <label htmlFor="priceLunch">Lunch price</label>
+                <input
+                    onChange={handleChange}
+                    value={fields.priceLunch}
+                    type="number"
+                    name="priceLunch"
+                />
+            </div>
+            <div>
+                <label htmlFor="availableLunch">Lunch available</label>
+                <input
+                    onChange={handleChange}
+                    checked={fields.availableLunch}
+                    type="checkbox"
+                    name="availableLunch"
+                />
+            </div>
+            <button type="submit">Create</button>
+            {message}
+        </form>
+    );
 };
-
