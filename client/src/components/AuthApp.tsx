@@ -8,6 +8,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Dashboard } from '../pages/Dashboard';
 import { ManageOrders } from '../pages/ManageOrders';
 import { ManageLunch } from '../pages/ManageLunch';
+import { FormCreateLunch } from './FormCreateLunch';
 
 const router = createBrowserRouter([
     {
@@ -30,8 +31,11 @@ const router = createBrowserRouter([
                 path:'/dashboard',
                 element:<ManageOrders/>
             }, {
-                path: '/dashboard/create',
+                path: '/dashboard/manage',
                 element:<ManageLunch/>
+            }, {
+                path: '/dashboard/create',
+                element:<FormCreateLunch/>
             }
         ]
     }
