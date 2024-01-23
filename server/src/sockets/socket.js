@@ -35,11 +35,22 @@ const initializeSocketIO = (httpServer) => {
                 const menuItems = new MenuItems();
                 const checkExis = await menuItems.consultItem(nameLunch, parseId);
                 if (checkExis.rows.length > 0) {
-                    socket.emit('existItemMessageServer', { message: "Item exist in the menu" })
+                    io.in(idSchool).emit('existItemMessageServer', { message: "Item exist in the menu" })
                 } else {
-                    const create = await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
-                    socket.emit("messageCreatedSuccesServer",{message:"Created succesfully"});
+                    const created = await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
+                    io.in(idSchool).emit("messageCreatedSuccesServer",{message:"succesfully"});
                 }
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        socket.on('listItemsClient',async (data) => {
+            const { room } = data;
+            try {
+                const menuItems = new MenuItems();
+                const result = await menuItems.consultAllItems(room);
+                io.in(room).emit('listItemsServer',result)
             } catch (error) {
                 console.log(error);
             }
