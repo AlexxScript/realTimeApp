@@ -62,11 +62,14 @@ export const MenuList = () => {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ul>
+                <div>
                     {data.map((item, index) => (
-                        <li key={index}>{item.item_name + item.description + item.price + item.available}</li>
+                        <div key={index}>
+                            <p>{item.item_name + item.description + item.price + item.available}</p>
+                            <button>add to cart</button>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
