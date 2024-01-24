@@ -37,7 +37,7 @@ const initializeSocketIO = (httpServer) => {
                 if (checkExis.rows.length > 0) {
                     io.in(idSchool).emit('existItemMessageServer', { message: "Item exist in the menu" })
                 } else {
-                    const created = await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
+                    await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
                     io.in(idSchool).emit("messageCreatedSuccesServer",{message:"succesfully"});
                 }
             } catch (error) {
