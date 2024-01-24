@@ -9,6 +9,7 @@ import { Dashboard } from '../pages/Dashboard';
 import { ManageOrders } from '../pages/ManageOrders';
 import { ManageLunch } from '../pages/ManageLunch';
 import { FormCreateLunch } from './FormCreateLunch';
+import { MenuList } from '../pages/MenuList';
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,9 @@ const router = createBrowserRouter([
         path: "/newschool",
         element: <RegisterSchool />
     },{
+        path:'/menu',
+        element:<MenuList/>
+    }, {
         path:"/dashboard",
         element: <Dashboard/>,
         children:[

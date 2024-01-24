@@ -9,49 +9,56 @@ interface ListItem {
     available: boolean
 }
 
-export const ListItems = () => {
+export const MenuList = () => {
+
     const contextAu = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<ListItem[]>([]);
-    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+
+        const room = contextAu.user.idSchool;
+        const email = contextAu.user.email;
+
+        if (contextAu.user.authenticated) {
+            socket.emit('joinRoomClient', { room, email });
+        }
+
+        return () => {
+            socket.off('joinRoomClient');
+        };
+    }, [socket, contextAu.user.idSchool, contextAu.user.email, contextAu.user.authenticated, contextAu.setUser]);
+
 
     useEffect(() => {
         socket.emit('listItemsClient', { room: contextAu.user.idSchool });
-
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
             setData(data.rows);
-            setLoading(false);
         });
-
         return () => {
             socket.off('listItemsClient');
             setData([]);
-            setLoading(true);
         }
-    }, [socket, contextAu.user.idSchool]);
+    }, [socket, contextAu.user.idSchool])
 
     useEffect(() => {
-        socket.on('existItemMessageServer', (data) => {
-            setMessage(data.message);
-        });
+        if (contextAu.user.idSchool != null) {
+            setLoading(false)
+        }
+    }, [contextAu.user.authenticated])
+
+    useEffect(() => {
         socket.on('messageCreatedSuccesServer', (data) => {
-            setMessage(data.message);
             socket.emit('listItemsClient', { room: contextAu.user.idSchool });
             socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
                 setData(data.rows);
                 setLoading(false);
             });
         });
-        return () => {
-            socket.off('existItemMessageServer')
-            socket.off('messageCreatedSuccesServer')
-            socket.off('listItemsClient');
-        }
-    }, [socket, contextAu.user.idSchool])
+    }, [socket])
 
     return (
         <div>
-            {message}
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -63,4 +70,4 @@ export const ListItems = () => {
             )}
         </div>
     );
-};
+}
