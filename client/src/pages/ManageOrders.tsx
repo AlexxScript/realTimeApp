@@ -10,11 +10,6 @@ export const ManageOrders = () => {
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
-        // const room = contextAu.user.idSchool;
-        // const email = contextAu.user.email;
-        // if (contextAu.user.authenticated) {
-        //     socket.emit('joinRoomClient', { room, email });
-        // }
         socket.on('welcomeMessageServer', (data) => {
             setMessage((prevMessage) => [...prevMessage, data])
         });

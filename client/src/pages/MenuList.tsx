@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 
 interface ListItem {
     item_name: string,
@@ -14,6 +15,7 @@ export const MenuList = () => {
     const contextAu = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<ListItem[]>([]);
+    const { cart,dispatch } = useShoppingCart();
 
     useEffect(() => {
 
@@ -57,16 +59,24 @@ export const MenuList = () => {
         });
     }, [socket])
 
+    const handleCart = (item:ListItem) => {
+        dispatch({type:"ADD_TO_CART",payload:item});
+        console.log(cart);
+    }
+
     return (
         <div>
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <ul>
+                <div>
                     {data.map((item, index) => (
-                        <li key={index}>{item.item_name + item.description + item.price + item.available}</li>
+                        <div key={index}>
+                            <p>{item.item_name + item.description + item.price + item.available}</p>
+                            <button onClick={()=>handleCart(item)}>add to cart</button>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
