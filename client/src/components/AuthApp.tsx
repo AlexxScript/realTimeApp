@@ -10,6 +10,7 @@ import { ManageOrders } from '../pages/ManageOrders';
 import { ManageLunch } from '../pages/ManageLunch';
 import { FormCreateLunch } from './FormCreateLunch';
 import { MenuList } from '../pages/MenuList';
+import { ShoppingCartProvider } from '../context/ShoppingCartContext';
 
 const router = createBrowserRouter([
     {
@@ -24,22 +25,22 @@ const router = createBrowserRouter([
     }, {
         path: "/newschool",
         element: <RegisterSchool />
-    },{
-        path:'/menu',
-        element:<MenuList/>
     }, {
-        path:"/dashboard",
-        element: <Dashboard/>,
-        children:[
+        path: '/menu',
+        element: <MenuList />
+    }, {
+        path: "/dashboard",
+        element: <Dashboard />,
+        children: [
             {
-                path:'/dashboard',
-                element:<ManageOrders/>
+                path: '/dashboard',
+                element: <ManageOrders />
             }, {
                 path: '/dashboard/manage',
-                element:<ManageLunch/>
+                element: <ManageLunch />
             }, {
                 path: '/dashboard/create',
-                element:<FormCreateLunch/>
+                element: <FormCreateLunch />
             }
         ]
     }
@@ -50,7 +51,7 @@ export const AuthApp = () => {
         authenticated: false,
         email: '',
         role: '',
-        idSchool:null
+        idSchool: null
     });
     useEffect(() => {
         const loadData = async () => {
@@ -60,10 +61,10 @@ export const AuthApp = () => {
                 });
                 const data = await res.json();
                 setUser({
-                    authenticated:data.authenticated,
-                    email:data.email,
-                    role:data.role,
-                    idSchool:data.idSchool
+                    authenticated: data.authenticated,
+                    email: data.email,
+                    role: data.role,
+                    idSchool: data.idSchool
                 })
                 console.log(data);
                 return data
@@ -76,8 +77,11 @@ export const AuthApp = () => {
     return (
         < React.StrictMode >
             <AuthContext.Provider value={{ user, setUser }}>
-                <RouterProvider router={router} />
+                <ShoppingCartProvider>
+                    <RouterProvider router={router} />
+                </ShoppingCartProvider>
             </AuthContext.Provider>
+
         </React.StrictMode >
     )
 }
