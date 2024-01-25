@@ -59,9 +59,12 @@ export const MenuList = () => {
         });
     }, [socket])
 
+    useEffect(() => {
+        console.log(cart);
+      }, [cart]);
+
     const handleCart = (item:ListItem) => {
         dispatch({type:"ADD_TO_CART",payload:item});
-        console.log(cart);
     }
 
     return (
@@ -74,6 +77,11 @@ export const MenuList = () => {
                         <div key={index}>
                             <p>{item.item_name + item.description + item.price + item.available}</p>
                             <button onClick={()=>handleCart(item)}>add to cart</button>
+                        </div>
+                    ))}
+                    {cart.map((item,index)=>(
+                        <div key={index}>
+                            <p>{item.item_name}</p>
                         </div>
                     ))}
                 </div>
