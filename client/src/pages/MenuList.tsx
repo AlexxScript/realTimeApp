@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import { ShoppingCart } from "../components/ShoppingCart";
 
 interface ListItem {
     item_name: string,
@@ -79,11 +80,12 @@ export const MenuList = () => {
                             <button onClick={()=>handleCart(item)}>add to cart</button>
                         </div>
                     ))}
-                    {cart.map((item,index)=>(
+                    <ShoppingCart dataItem={cart}/>
+                    {/* {cart.map((item,index)=>(
                         <div key={index}>
                             <p>{item.item_name}</p>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
             )}
         </div>

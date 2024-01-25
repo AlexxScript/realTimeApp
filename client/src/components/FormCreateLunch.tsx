@@ -11,6 +11,7 @@ export const FormCreateLunch = () => {
         nameLunch: "",
         descriptionLunch: "",
         priceLunch: 0,
+        qyItems:0,
         availableLunch: false,
     });
 
@@ -51,7 +52,8 @@ export const FormCreateLunch = () => {
             descriptionLunch: fields.descriptionLunch,
             priceLunch: fields.priceLunch,
             availableLunch: fields.availableLunch,
-            idSchool: contextAu.user.idSchool
+            idSchool: contextAu.user.idSchool,
+            qyItems:fields.qyItems
         });
     };
 
@@ -81,6 +83,15 @@ export const FormCreateLunch = () => {
                     value={fields.priceLunch}
                     type="number"
                     name="priceLunch"
+                />
+            </div>
+            <div>
+                <label htmlFor="qyItems">Quantity of items</label>
+                <input
+                    onChange={handleChange}
+                    value={fields.qyItems}
+                    type="number"
+                    name="qyItems"
                 />
             </div>
             <div>

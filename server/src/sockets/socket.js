@@ -28,16 +28,17 @@ const initializeSocketIO = (httpServer) => {
             io.to(room).emit("welcomeMessageServer", { email: email });
         });
         socket.on('createLunchCliente', async (data) => {
-            const { nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool } = data;
-            console.log(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
+            const { nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool,qyItems } = data;
+            console.log(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool,qyItems)
             const parseId = parseInt(idSchool)
+            const parseQy = parseInt(qyItems)
             try {
                 const menuItems = new MenuItems();
                 const checkExis = await menuItems.consultItem(nameLunch, parseId);
                 if (checkExis.rows.length > 0) {
                     io.in(idSchool).emit('existItemMessageServer', { message: "Item exist in the menu" })
                 } else {
-                    await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool)
+                    await menuItems.createItem(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool,parseQy)
                     io.in(idSchool).emit("messageCreatedSuccesServer",{message:"succesfully"});
                 }
             } catch (error) {
