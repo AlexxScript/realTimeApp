@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import { ShoppingCart } from "../components/ShoppingCart";
 
 interface ListItem {
-    item_name: string,
-    description: string,
-    price: any,
-    available: boolean
+    item_name: string;
+    description: string;
+    price: any;
+    available: boolean;
+    quantity: number;
+    total: number;
 }
 
 export const MenuList = () => {
@@ -15,7 +18,7 @@ export const MenuList = () => {
     const contextAu = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<ListItem[]>([]);
-    const { cart,dispatch } = useShoppingCart();
+    const { cart, dispatch } = useShoppingCart();
 
     useEffect(() => {
 
@@ -61,10 +64,10 @@ export const MenuList = () => {
 
     useEffect(() => {
         console.log(cart);
-      }, [cart]);
+    }, [cart]);
 
-    const handleCart = (item:ListItem) => {
-        dispatch({type:"ADD_TO_CART",payload:item});
+    const handleCart = (item: ListItem) => {
+        dispatch({ type: "ADD_TO_CART", payload: item });
     }
 
     return (
@@ -75,15 +78,16 @@ export const MenuList = () => {
                 <div>
                     {data.map((item, index) => (
                         <div key={index}>
-                            <p>{item.item_name + item.description + item.price + item.available}</p>
-                            <button onClick={()=>handleCart(item)}>add to cart</button>
+                            <p>{item.item_name + item.description + item.price + item.available + item.quantity}</p>
+                            <select name="">
+                                {[...Array(item.quantity).keys()].map(i => (
+                                    <option key={i + 1}>{i + 1}</option>
+                                ))}
+                            </select>
+                            <button onClick={() => handleCart(item)}>add to cart</button>
                         </div>
                     ))}
-                    {cart.map((item,index)=>(
-                        <div key={index}>
-                            <p>{item.item_name}</p>
-                        </div>
-                    ))}
+                    <ShoppingCart dataItem={cart} />
                 </div>
             )}
         </div>

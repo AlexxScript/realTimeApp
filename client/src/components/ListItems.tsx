@@ -6,6 +6,7 @@ interface ListItem {
     item_name: string,
     description: string,
     price: any,
+    quantity:any,
     available: boolean
 }
 
@@ -21,6 +22,7 @@ export const ListItems = () => {
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
             setData(data.rows);
             setLoading(false);
+            console.log(data.rows);
         });
 
         return () => {
@@ -40,6 +42,7 @@ export const ListItems = () => {
             socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
                 setData(data.rows);
                 setLoading(false);
+                console.log(data.rows);
             });
         });
         return () => {
@@ -57,7 +60,7 @@ export const ListItems = () => {
             ) : (
                 <ul>
                     {data.map((item, index) => (
-                        <li key={index}>{item.item_name + item.description + item.price + item.available}</li>
+                        <li key={index}>{item.item_name + item.description + item.price + item.available + item.quantity}</li>
                     ))}
                 </ul>
             )}

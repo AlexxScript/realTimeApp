@@ -1,11 +1,11 @@
 import { pool } from "../libs/db.js";
 
 export class MenuItems {
-    async createItem(name, description, price, available, schoolId) {
+    async createItem(name, description, price, available, schoolId,qyItems) {
         const connection = await pool.connect();
         try {
-            const qy = "INSERT INTO menu_items (item_name,description,price,available,school_id) VALUES($1,$2,$3,$4,$5) RETURNING item_name,description,price,available";
-            const created = await connection.query(qy, [name, description, price, available, schoolId]);
+            const qy = "INSERT INTO menu_items (item_name,description,price,available,school_id,quantity) VALUES($1,$2,$3,$4,$5,$6) RETURNING item_name,description,price,available";
+            const created = await connection.query(qy, [name, description, price, available, schoolId, qyItems]);
             return created;
         } catch (error) {
             console.log(error);
