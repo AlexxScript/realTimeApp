@@ -5,13 +5,15 @@ interface CartItem {
     description: string;
     price: any;
     available: boolean;
-    quantity: number;
-    total: number; // Add this property
+    quantity: number; //from database
+    total: number; // total amount
+    qY: number; //selected in the menu
 }
 
 type CartAction =
-    | { type: "ADD_TO_CART"; payload: CartItem }
-    | { type: "REMOVE_FROM_CART"; payload: string };
+    | { type: "ADD_TO_CART"; payload: CartItem; qY: number }
+    | { type: "REMOVE_FROM_CART"; payload: string }
+    | { type: "UPDATE_QY"; payload: string; qY: number };
 
 interface ShoppingCartContextType {
     cart: CartItem[];
@@ -22,11 +24,20 @@ const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(u
 
 const cartReducer: React.Reducer<CartItem[], CartAction> = (state, action) => {
     if (action.type === 'ADD_TO_CART') {
-        const newItem = { ...action.payload, total: action.payload.price * action.payload.quantity };
+        const newItem = { ...action.payload, total: action.payload.price * action.qY };
         return [...state, newItem];
     }
     if (action.type === 'REMOVE_FROM_CART') {
         return state.filter(item => item.item_name !== action.payload);
+    }
+    if (action.type === 'UPDATE_QY') {
+        const updatedCart = state.map(item => {
+            if (item.item_name === action.payload) {
+                return { ...item, qY: action.qY };
+            }
+            return item;
+        });
+        return updatedCart;
     }
     return state;
 };
