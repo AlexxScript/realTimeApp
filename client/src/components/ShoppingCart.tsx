@@ -37,11 +37,16 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem,totalAcum }) => {
     };
 
     const handleChange = (itemName: string, quantity: number) => {
+      if (quantity === 0) {
+        dispatch({ type: "REMOVE_FROM_CART", payload: itemName });
+      } else {
         setSelectedQuantities(prevQuantities => ({
             ...prevQuantities,
             [itemName]: quantity,
         }));
         dispatch({type:"UPDATE_QY",payload:itemName,qY:quantity})
+      }
+        
     };
 
     const makeOrder = () => {
@@ -56,6 +61,8 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem,totalAcum }) => {
                     <h3>{item.item_name}</h3>
                     <p>{item.price}</p>
                     <label htmlFor="">How many?</label>
+<h1>{item.qY}</h1>                  
+
                     <select
                         name={item.item_name}
                         value={selectedQuantities[item.item_name] || item.qY}
