@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 
 interface ItemCart {
-    item_name: string;
-    price: number;
-    available: boolean;
-    quantity: number;
-    qY:number;
+    item_name: string; //Item name for each item
+    description: string; //Description for each item
+    price: any; //Price for each item
+    available: boolean; //Is or not avaiable
+    quantity: number; //Total quantity
+    qY: number; //Quantity selected by the user
 }
 
 interface PropCart {
@@ -14,11 +15,11 @@ interface PropCart {
     totalAcum: number;
 }
 
-export const ShoppingCart: React.FC<PropCart> = ({ dataItem,totalAcum }) => {
+export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
     const [total, setTotal] = useState<number>(0);
     const { cart, dispatch } = useShoppingCart();
     const [selectedQuantities, setSelectedQuantities] = useState<{ [itemName: string]: number }>({});
-    
+
     useEffect(() => {
         setTotal(totalAcum);
     }, [totalAcum]);
@@ -26,7 +27,6 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem,totalAcum }) => {
     useEffect(() => {
         let newTotal = 0;
         for (const item of cart) {
-            // const selectedQuantity = selectedQuantities[item.item_name] || 0;
             newTotal += item.price * item.qY;
         }
         setTotal(newTotal);
@@ -37,16 +37,16 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem,totalAcum }) => {
     };
 
     const handleChange = (itemName: string, quantity: number) => {
-      if (quantity === 0) {
-        dispatch({ type: "REMOVE_FROM_CART", payload: itemName });
-      } else {
-        setSelectedQuantities(prevQuantities => ({
-            ...prevQuantities,
-            [itemName]: quantity,
-        }));
-        dispatch({type:"UPDATE_QY",payload:itemName,qY:quantity})
-      }
-        
+        if (quantity === 0) {
+            dispatch({ type: "REMOVE_FROM_CART", payload: itemName });
+        } else {
+            setSelectedQuantities(prevQuantities => ({
+                ...prevQuantities,
+                [itemName]: quantity,
+            }));
+            dispatch({ type: "UPDATE_QY", payload: itemName, qY: quantity })
+        }
+
     };
 
     const makeOrder = () => {
@@ -61,11 +61,18 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem,totalAcum }) => {
                     <h3>{item.item_name}</h3>
                     <p>{item.price}</p>
                     <label htmlFor="">How many?</label>
-<h1>{item.qY}</h1>                  
-
+                    {
+                        cart.map((i, index) => (
+                            <h1 key={index}>
+                                {i.item_name === item.item_name ? i.qY : ''}
+                            </h1>
+                        ))
+                    }
                     <select
                         name={item.item_name}
-                        value={selectedQuantities[item.item_name] || item.qY}
+                        // value={selectedQuantities[item.item_name] || item.qY}
+                        value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
+
                         onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
                     >
                         {[...Array(item.quantity + 1).keys()].map((i) => (

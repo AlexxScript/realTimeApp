@@ -1,13 +1,12 @@
 import React, { Dispatch, createContext, useContext, useReducer } from "react";
 
 interface CartItem {
-    item_name: string;
-    description: string;
-    price: any;
-    available: boolean;
-    quantity: number; //from database
-    total: number; // total amount
-    qY: number; //selected in the menu
+    item_name: string; //Item name for each item
+    description: string; //Description for each item
+    price: any; //Price for each item
+    available: boolean; //Is or not avaiable
+    quantity: number; //Total quantity
+    qY:number; //Quantity selected by the user
 }
 
 type CartAction =
@@ -24,7 +23,9 @@ const ShoppingCartContext = createContext<ShoppingCartContextType | undefined>(u
 
 const cartReducer: React.Reducer<CartItem[], CartAction> = (state, action) => {
     if (action.type === 'ADD_TO_CART') {
-        const newItem = { ...action.payload, total: action.payload.price * action.qY };
+        // const newItem = { ...action.payload, total: action.payload.price * action.qY };
+        const newItem = { ...action.payload, qY: action.qY };
+
         return [...state, newItem];
     }
     if (action.type === 'REMOVE_FROM_CART') {

@@ -5,23 +5,22 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import { ShoppingCart } from "../components/ShoppingCart";
 
 interface ListItem {
-    item_name: string;
-    description: string;
-    price: any;
-    available: boolean;
-    quantity: number;
-    total: number;
-    qY:number;
+    item_name: string; //Item name for each item
+    description: string; //Description for each item
+    price: any; //Price for each item
+    available: boolean; //Is or not avaiable
+    quantity: number; //Total quantity
+    qY: number; //Quantity selected by the user
 }
 
 export const MenuList = () => {
 
-    const contextAu = useContext(AuthContext);
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState<ListItem[]>([]);
-    const { cart, dispatch } = useShoppingCart();
-    const [selectedQuantities, setSelectedQuantities] = useState<{ [itemName: string]: number }>({});
-    const [total, setTotal] = useState<number>(0);
+    const contextAu = useContext(AuthContext); //Data auth
+    const [loading, setLoading] = useState(true); //Loading data
+    const [data, setData] = useState<ListItem[]>([]); //All items available or not to buy
+    const { cart, dispatch } = useShoppingCart(); //cart: all items selected; dispatch: actions
+    const [selectedQuantities, setSelectedQuantities] = useState<{ [itemName: string]: number }>({});//Count quantities per item
+    const [total, setTotal] = useState<number>(0); //Total amount to pay
 
     useEffect(() => {
 
@@ -40,8 +39,7 @@ export const MenuList = () => {
     useEffect(() => {
         let newTotal = 0;
         for (const item of cart) {
-            const selectedQuantity = selectedQuantities[item.item_name] || 0;
-            newTotal += item.price * selectedQuantity;
+            newTotal += item.price * item.qY;
         }
         setTotal(newTotal);
     }, [cart, selectedQuantities]);
@@ -50,6 +48,9 @@ export const MenuList = () => {
         socket.emit('listItemsClient', { room: contextAu.user.idSchool });
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
             setData(data.rows);
+            for(let i of data.rows){
+                i.qY = 0;
+            }
         });
         return () => {
             socket.off('listItemsClient');
@@ -73,16 +74,16 @@ export const MenuList = () => {
         });
     }, [socket])
 
-    const handleChange = (itemName: string, quantity: number,item:ListItem) => {
+    const handleChange = (itemName: string, quantity: number) => {
         setSelectedQuantities(prevQuantities => ({
             ...prevQuantities,
             [itemName]: quantity,
         }));
-        item.qY = quantity;
+        dispatch({ type: "UPDATE_QY", payload: itemName, qY: quantity })
     };
 
     const handleCart = (item: ListItem) => {
-        dispatch({ type: "ADD_TO_CART", payload: item, qY:selectedQuantities[item.item_name]});
+        dispatch({ type: "ADD_TO_CART", payload: item, qY: selectedQuantities[item.item_name] });
         console.log(total);
     }
 
@@ -97,8 +98,9 @@ export const MenuList = () => {
                             <p>{item.item_name + item.description + item.price + item.available + item.quantity}</p>
                             <select
                                 name={item.item_name}
-                                value={selectedQuantities[item.item_name] || 0}
-                                onChange={(e) => handleChange(item.item_name, parseInt(e.target.value),item)}
+                                // value={selectedQuantities[item.item_name] || 0}
+                                value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
+                                onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
                             >
                                 {[...Array(item.quantity + 1).keys()].map((i) => (
                                     <option key={i} value={i}>
@@ -109,10 +111,9 @@ export const MenuList = () => {
                             <button onClick={() => handleCart(item)}>add to cart</button>
                         </div>
                     ))}
-                    <ShoppingCart dataItem={cart} totalAcum={total}/>
+                    <ShoppingCart dataItem={cart} totalAcum={total} />
                 </div>
             )}
-            
         </div>
     );
 }
