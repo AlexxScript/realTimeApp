@@ -63,8 +63,9 @@ const initializeSocketIO = (httpServer) => {
             socket.join(data.idSchool);
             try {
                 const order = new Order();
-                const content = await order.createOrder(data.email,data.idSchool,data.cart,data.totalAcum,false)
-                io.in(data.idSchool).emit("orderCreatedServer",{message:"succes",content:content.rows[0]})
+                const content = await order.createOrder(data.email, data.idSchool, data.cart, data.totalAcum, false)
+                console.log(content);
+                io.in(data.idSchool).emit("orderCreatedServer", { message: "succes", content: content })
             } catch (error) {
                 console.log(error);
             }

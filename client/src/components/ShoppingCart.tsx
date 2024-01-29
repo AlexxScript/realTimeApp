@@ -58,14 +58,14 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
         console.log(cart,totalAcum,contextAu.user.idSchool);
         socket.emit("makeOrderClient",{cart,totalAcum,idSchool:contextAu.user.idSchool,email:contextAu.user.email});
         socket.on("orderCreatedServer",(data)=>{
-            console.log(data.content);
+            console.log((data.content));
             setMessageOrder(data.message);
         })
     };
 
-    if (messageOrder === "succes") {
-        return <Navigate to="/" replace/>
-    }
+    // if (messageOrder === "succes") {
+    //     return <Navigate to="/" replace/>
+    // }
 
     return (
         <div className="shoppingCart">
