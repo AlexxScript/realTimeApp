@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import { socket } from "../socket/socket";
+import { AuthContext } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 interface ItemCart {
     item_name: string; //Item name for each item
@@ -16,9 +19,11 @@ interface PropCart {
 }
 
 export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
+    const contextAu = useContext(AuthContext);
     const [total, setTotal] = useState<number>(0);
     const { cart, dispatch } = useShoppingCart();
     const [selectedQuantities, setSelectedQuantities] = useState<{ [itemName: string]: number }>({});
+    const [messageOrder,setMessageOrder] = useState('');
 
     useEffect(() => {
         setTotal(totalAcum);
@@ -50,9 +55,17 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
     };
 
     const makeOrder = () => {
-        console.log(cart);
-
+        console.log(cart,totalAcum,contextAu.user.idSchool);
+        socket.emit("makeOrderClient",{cart,totalAcum,idSchool:contextAu.user.idSchool,email:contextAu.user.email});
+        socket.on("orderCreatedServer",(data)=>{
+            console.log(data.content);
+            setMessageOrder(data.message);
+        })
     };
+
+    if (messageOrder === "succes") {
+        return <Navigate to="/" replace/>
+    }
 
     return (
         <div className="shoppingCart">
