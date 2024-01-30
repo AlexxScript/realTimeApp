@@ -6,7 +6,7 @@ export const App = () => {
 
     const contextAu = useContext(AuthContext);
     const [loadingS,setLoadingS] = useState<boolean>(true);
-    const [messageW, setMessageW] = useState<{email:string}[]>([]);
+    const [messageW, setMessageW] = useState([]);
 
     useEffect(() => {
         const room = contextAu.user.idSchool;
@@ -14,13 +14,16 @@ export const App = () => {
         if (contextAu.user.authenticated) {
             socket.emit('joinRoomClient', { room, email });
         }
-        socket.on('welcomeMessageServer', (data) => {
-            setMessageW((prevMessage)=>[...prevMessage,data])
+        // socket.on('welcomeMessageServer', (data) => {
+        //     setMessageW((prevMessage)=>[...prevMessage,data])
+        // })
+        socket.on("orderCreatedServer",(data)=>{
+            console.log(JSON.parse(data.content));
+            setMessageW(data.message);
         })
-
         return () => {
             socket.off('joinRoomClient');
-            socket.off('welcomeMessageServer');
+            // socket.off('welcomeMessageServer');
         };
     }, [socket, contextAu.user.idSchool, contextAu.user.email, contextAu.user.authenticated]);
 
@@ -37,9 +40,9 @@ export const App = () => {
     if (contextAu.user.authenticated) {
         return (
             <div>
-                {messageW.map((message,index)=>(
-                    <h2 key={index}>hi {message.email}</h2>
-                ))}
+                {/* {messageW.map((message,index)=>(
+                    <h2 key={index}>hi {message}</h2>
+                ))} */}
             </div>
         )
     }
