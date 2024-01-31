@@ -1,6 +1,7 @@
 import { Server as SocketIOServer } from 'socket.io';
 import { MenuItems } from '../models/MenuItems.js';
 import { Order } from '../models/Order.js';
+import { User } from '../models/User.js';
 
 let io;
 
@@ -59,14 +60,29 @@ const initializeSocketIO = (httpServer) => {
         })
 
         socket.on('makeOrderClient', async (data) => {
-            // console.log(data.cart, `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
             socket.join(data.idSchool);
             try {
                 const order = new Order();
-                const content = await order.createOrder(data.email,data.idSchool,data.cart,data.totalAcum,false)
-                io.in(data.idSchool).emit("orderCreatedServer",{message:"succes",content:content.rows[0]})
+                const user = new User();
+                const idUser = await user.selectUser(data.email);
+                console.log(idUser.rows[0].id_users);
+                const content = await order.createOrder(data.idSchool, data.cart, data.totalAcum, false,idUser.rows[0].id_users)
+                io.in(data.idSchool).emit("orderCreatedServer", { message: "succes", content: content })
             } catch (error) {
                 console.log(error);
+            }
+        })
+
+        socket.on('listOrdersClient', async (data) => {
+            const { room } = data;
+            socket.join(room);
+            try {
+                const order = new Order();
+                const result = await order.listAllOrders(room);
+                // console.log(result.rows)
+                io.in(room).emit("listOrdersServer",{result})
+            } catch (error) {
+                console.log(error)
             }
         })
     });

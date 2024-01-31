@@ -47,6 +47,7 @@ export const MenuList = () => {
     useEffect(() => {
         socket.emit('listItemsClient', { room: contextAu.user.idSchool });
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
+            console.log(data.rows);
             setData(data.rows);
             for(let i of data.rows){
                 i.qY = 0;
