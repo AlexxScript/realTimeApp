@@ -56,6 +56,9 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
 
     const makeOrder = () => {
         socket.emit("makeOrderClient",{cart:JSON.stringify(cart),totalAcum,idSchool:contextAu.user.idSchool,email:contextAu.user.email});
+        socket.on("orderCreatedServer",(data) => {
+            setMessageOrder(data.message);
+        })
     };
 
     if (messageOrder === "succes") {
@@ -78,7 +81,6 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
                     }
                     <select
                         name={item.item_name}
-                        // value={selectedQuantities[item.item_name] || item.qY}
                         value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
 
                         onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
