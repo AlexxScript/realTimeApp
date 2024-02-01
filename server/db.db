@@ -53,3 +53,6 @@ CREATE TABLE orders_items (
 ALTER TABLE menu_items DROP COLUMN user_id;
 
  ALTER TABLE menu_items ADD COLUMN quantity INT;
+
+ ALTER DATABASE school_cafeteria
+SET TIMEZONE TO 'America/Mexico_City';

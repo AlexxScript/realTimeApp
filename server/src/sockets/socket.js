@@ -79,10 +79,21 @@ const initializeSocketIO = (httpServer) => {
             try {
                 const order = new Order();
                 const result = await order.listAllOrders(room);
-                // console.log(result.rows)
                 io.in(room).emit("listOrdersServer",{result})
             } catch (error) {
                 console.log(error)
+            }
+        })
+
+        socket.on("updateStatuOrderClient",async (data) => {
+            const order = new Order();
+            socket.join(data.idSchool);
+            try {
+                const result = await order.updateOrderStatus(data.idOrder);
+                console.log(result);
+                io.in(data.idSchool).emit("messageUpdateStatusServer",{result});
+            } catch (error) {
+                console.log(error);
             }
         })
     });

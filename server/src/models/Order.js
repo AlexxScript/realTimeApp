@@ -18,11 +18,24 @@ export class Order {
     async listAllOrders (idSchool) {
         const connection = await pool.connect();
         try {
-            const qy = "SELECT * FROM orders WHERE school_id = $1";
+            const qy = "SELECT * FROM orders WHERE school_id = $1 ORDER BY orders_time ASC";
             const consult = await connection.query(qy,[idSchool]);
             return consult.rows;
         } catch (error) {
             console.log(error);
+        } finally {
+            connection.release();
+        }
+    }
+
+    async updateOrderStatus (idOrder) {
+        const connection = await pool.connect();
+        try {
+            const qy = "UPDATE orders SET is_completed=true WHERE id_orders = $1";
+            await connection.query(qy,[idOrder]);
+            return "succes";
+        } catch (error) {
+            console.log(`database error: ${error}`);
         } finally {
             connection.release();
         }
