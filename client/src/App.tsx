@@ -88,10 +88,10 @@ export const App = () => {
             <div>
                 <h1>Orders</h1>
                 {orders.map((item, index) => (
-                    <div key={index}>
+                    <div className="listOrdersClient" key={index}>
                         <h2>{item.total_amount}</h2>
                         {item.orders_content.map((it: Order,ind:number) => (
-                            <div key={ind}>
+                            <div className='listContentClient' key={ind}>
                                 <h3>{it.item_name}</h3>
                                 <h4>Quantity:{it.qY} Unitary price:{it.price}</h4>
                             </div>

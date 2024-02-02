@@ -24,6 +24,7 @@ export const ListItems = () => {
             setLoading(false);
             console.log(data.rows);
         });
+        console.log(data);
 
         return () => {
             socket.off('listItemsClient');
@@ -54,13 +55,14 @@ export const ListItems = () => {
 
     return (
         <div>
+            <h1>hola</h1>
             {message}
             {loading ? (
                 <p>Loading...</p>
             ) : (
                 <ul>
                     {data.map((item, index) => (
-                        <li key={index}>{item.item_name + item.description + item.price + item.available + item.quantity}</li>
+                        <li className="listItemsCreated" key={index}>{item.item_name + item.description + item.price + item.available + item.quantity}</li>
                     ))}
                 </ul>
             )}

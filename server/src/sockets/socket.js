@@ -29,6 +29,7 @@ const initializeSocketIO = (httpServer) => {
             socket.join(room);
             io.to(room).emit("welcomeMessageServer", { email: email });
         });
+        
         socket.on('createLunchCliente', async (data) => {
             const { nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool, qyItems } = data;
             console.log(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool, qyItems)
@@ -50,6 +51,7 @@ const initializeSocketIO = (httpServer) => {
 
         socket.on('listItemsClient', async (data) => {
             const { room } = data;
+            socket.join(room)
             try {
                 const menuItems = new MenuItems();
                 const result = await menuItems.consultAllItems(room);
@@ -66,7 +68,7 @@ const initializeSocketIO = (httpServer) => {
                 const user = new User();
                 const idUser = await user.selectUser(data.email);
                 console.log(idUser.rows[0].id_users);
-                const content = await order.createOrder(data.idSchool, data.cart, data.totalAcum, false,idUser.rows[0].id_users)
+                const content = await order.createOrder(data.idSchool, data.cart, data.totalAcum, false, idUser.rows[0].id_users)
                 io.in(data.idSchool).emit("orderCreatedServer", { message: "succes", content: content })
             } catch (error) {
                 console.log(error);
@@ -79,19 +81,19 @@ const initializeSocketIO = (httpServer) => {
             try {
                 const order = new Order();
                 const result = await order.listAllOrders(room);
-                io.in(room).emit("listOrdersServer",{result})
+                io.in(room).emit("listOrdersServer", { result })
             } catch (error) {
                 console.log(error)
             }
         })
 
-        socket.on("updateStatuOrderClient",async (data) => {
+        socket.on("updateStatuOrderClient", async (data) => {
             const order = new Order();
             socket.join(data.idSchool);
             try {
                 const result = await order.updateOrderStatus(data.idOrder);
                 console.log(result);
-                io.in(data.idSchool).emit("messageUpdateStatusServer",{result});
+                io.in(data.idSchool).emit("messageUpdateStatusServer", { result });
             } catch (error) {
                 console.log(error);
             }
