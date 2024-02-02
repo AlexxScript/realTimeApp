@@ -38,9 +38,6 @@ const router = createBrowserRouter([
             }, {
                 path: '/dashboard/manage',
                 element: <ManageLunch />
-            }, {
-                path: '/dashboard/create',
-                element: <FormCreateLunch />
             }
         ]
     }

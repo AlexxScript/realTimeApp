@@ -73,7 +73,12 @@ export const MenuList = () => {
                 setLoading(false);
             });
         });
-    }, [socket])
+        return () => {
+            socket.off('existItemMessageServer')
+            socket.off('messageCreatedSuccesServer')
+            socket.off('listItemsClient')
+        }
+    }, [socket,contextAu.user.idSchool])
 
     const handleChange = (itemName: string, quantity: number) => {
         setSelectedQuantities(prevQuantities => ({
@@ -95,11 +100,10 @@ export const MenuList = () => {
             ) : (
                 <div>
                     {data.map((item, index) => (
-                        <div key={index}>
+                        <div className="itemsList" key={index}>
                             <p>{item.item_name + item.description + item.price + item.available + item.quantity}</p>
                             <select
                                 name={item.item_name}
-                                // value={selectedQuantities[item.item_name] || 0}
                                 value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
                                 onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
                             >

@@ -83,13 +83,13 @@ export const ManageOrders = () => {
                 <h1>Manage order</h1>
                 {
                     orders.map((item) => (
-                        <div key={item.id_orders}>
+                        <div className='listOrdersAdmin' key={item.id_orders}>
                             {
                                 !item.is_completed ?
                                     <div>
                                         <h1>{item.total_amount}</h1>
                                         {item.orders_content.map((it: Order,ind:number) => (
-                                            <div key={ind}>
+                                            <div className='listContentAdmin' key={ind}>
                                                 <h3>{it.item_name}</h3>
                                                 <h4>Quantity:{it.qY} Unitary price:{it.price}</h4>
                                             </div>

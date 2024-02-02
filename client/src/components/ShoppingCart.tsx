@@ -68,15 +68,15 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
     return (
         <div className="shoppingCart">
             {dataItem.map((item, index) => (
-                <div key={index}>
+                <div className="shoppingCartItems" key={index}>
                     <h3>{item.item_name}</h3>
                     <p>{item.price}</p>
                     <label htmlFor="">How many?</label>
                     {
                         cart.map((i, index) => (
-                            <h1 key={index}>
+                            <h4 key={index}>
                                 {i.item_name === item.item_name ? i.qY : ''}
-                            </h1>
+                            </h4>
                         ))
                     }
                     <select

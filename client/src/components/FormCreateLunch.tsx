@@ -26,7 +26,7 @@ export const FormCreateLunch = () => {
             socket.off('existItemMessageServer')
             socket.off('messageCreatedSuccesServer')
         }
-    }, [])
+    }, [socket])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
