@@ -5,6 +5,7 @@ interface UserState {
     email:string
     role:string
     idSchool:any
+    idUser:any
 }
 
 interface AuthContextType {
@@ -16,7 +17,8 @@ const defaultUserState: UserState = {
     authenticated:false,
     email:'',
     role:'',
-    idSchool:null
+    idSchool:null,
+    idUser:''
 }
 
 export const AuthContext = createContext<AuthContextType>({

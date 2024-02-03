@@ -87,9 +87,11 @@ export const App = () => {
         return (
             <div>
                 <h1>Orders</h1>
+                <h2>Your id user is {contextAu.user.idUser}</h2>
                 {orders.map((item, index) => (
                     <div className="listOrdersClient" key={index}>
                         <h2>{item.total_amount}</h2>
+                        <h3>Id user: {item.user_id}</h3>
                         {item.orders_content.map((it: Order,ind:number) => (
                             <div className='listContentClient' key={ind}>
                                 <h3>{it.item_name}</h3>

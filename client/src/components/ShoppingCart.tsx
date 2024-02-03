@@ -82,7 +82,6 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
                     <select
                         name={item.item_name}
                         value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
-
                         onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
                     >
                         {[...Array(item.quantity + 1).keys()].map((i) => (

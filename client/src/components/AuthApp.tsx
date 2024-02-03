@@ -48,7 +48,8 @@ export const AuthApp = () => {
         authenticated: false,
         email: '',
         role: '',
-        idSchool: null
+        idSchool: null,
+        idUser:''
     });
     useEffect(() => {
         const loadData = async () => {
@@ -61,7 +62,8 @@ export const AuthApp = () => {
                     authenticated: data.authenticated,
                     email: data.email,
                     role: data.role,
-                    idSchool: data.idSchool
+                    idSchool: data.idSchool,
+                    idUser:data.idUser
                 })
                 console.log(data);
                 return data
