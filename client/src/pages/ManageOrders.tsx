@@ -82,12 +82,13 @@ export const ManageOrders = () => {
             <div>
                 <h1>Manage order</h1>
                 {
-                    orders.map((item) => (
-                        <div className='listOrdersAdmin' key={item.id_orders}>
+                    orders.map((item,index) => (
+                        <div className='listOrdersAdmin' key={index}>
                             {
                                 !item.is_completed ?
                                     <div>
                                         <h1>{item.total_amount}</h1>
+                                        <h2>Id user is: {item.user_id}</h2>
                                         {item.orders_content.map((it: Order,ind:number) => (
                                             <div className='listContentAdmin' key={ind}>
                                                 <h3>{it.item_name}</h3>
