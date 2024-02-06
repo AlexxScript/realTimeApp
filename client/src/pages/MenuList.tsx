@@ -3,6 +3,7 @@ import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { ShoppingCart } from "../components/ShoppingCart";
+import { NavBar } from "../components/NavBar";
 
 interface ListItem {
     item_name: string; //Item name for each item
@@ -95,6 +96,7 @@ export const MenuList = () => {
 
     return (
         <div>
+            <NavBar/>
             {loading ? (
                 <p>Loading...</p>
             ) : (
