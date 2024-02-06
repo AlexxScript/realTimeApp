@@ -40,4 +40,17 @@ export class Order {
             connection.release();
         }
     }
+
+    async deleteOrder(idOrder,idSchool) {
+        const connection = await pool.connect();
+        try {
+            const qy = "DELETE FROM orders WHERE id_orders = $1 AND school_id = $2";
+            await connection.query(qy,[idOrder,idSchool]);
+            return "deleted succes";
+        } catch (error) {
+            console.log(error);
+        } finally {
+            connection.release();
+        }
+    }
 }

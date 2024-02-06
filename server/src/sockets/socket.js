@@ -98,6 +98,18 @@ const initializeSocketIO = (httpServer) => {
                 console.log(error);
             }
         })
+
+        socket.on("cancelOrderClient",async (data) => {
+            socket.join(data.idSchool);
+            const order = new Order();
+            try {
+                await order.deleteOrder(data.idOrder,data.idSchool)
+                const result = await order.listAllOrders(data.idSchool);
+                io.in(data.idSchool).emit("listOrdersServer", { result })
+            } catch (error) {
+                console.log(error);
+            }
+        })
     });
 
     return io;

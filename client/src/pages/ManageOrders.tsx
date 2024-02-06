@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { socket } from '../socket/socket';
 import { AuthContext } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
+import { NavBar } from '../components/NavBar';
 
 interface ListOrder {
     id_orders: any;
@@ -71,6 +72,10 @@ export const ManageOrders = () => {
         socket.emit('updateStatuOrderClient', { idOrder, idSchool })
     }
 
+    const handleCancelOrder = (idOrder: number | string, idSchool: number | string) => {
+        socket.emit('cancelOrderClient', { idOrder, idSchool });
+    }
+
     if (loading) {
         return <h1>Loading</h1>
     }
@@ -82,14 +87,14 @@ export const ManageOrders = () => {
             <div>
                 <h1>Manage order</h1>
                 {
-                    orders.map((item,index) => (
+                    orders.map((item, index) => (
                         <div className='listOrdersAdmin' key={index}>
                             {
                                 !item.is_completed ?
                                     <div>
                                         <h1>{item.total_amount}</h1>
                                         <h2>Id user is: {item.user_id}</h2>
-                                        {item.orders_content.map((it: Order,ind:number) => (
+                                        {item.orders_content.map((it: Order, ind: number) => (
                                             <div className='listContentAdmin' key={ind}>
                                                 <h3>{it.item_name}</h3>
                                                 <h4>Quantity:{it.qY} Unitary price:{it.price}</h4>
@@ -97,10 +102,11 @@ export const ManageOrders = () => {
                                         ))}
                                         {`Time ${new Date(item.orders_time).getHours()}:${new Date(item.orders_time).getMinutes()}`}
                                         <button onClick={() => handleClick(item.id_orders, item.school_id)}>Complete order</button>
+                                        <button onClick={() => handleCancelOrder(item.id_orders, item.school_id)}>Cancel order</button>
                                     </div>
-                                    : 
+                                    :
                                     <div>
-                                        <h1>{item.id_orders}: </h1>completed
+
                                     </div>
                             }
                         </div>
