@@ -9,7 +9,7 @@ export const Profile = () => {
     return (
         <section>
             <NavBar/>
-            <div>
+            <div className='mainContent'>
                 <svg width="225" height="220" viewBox="0 0 225 220" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="undraw_profile_pic_re_iwgo 1" clipPath="url(#clip0_7_10)">
                         <g id="Group">

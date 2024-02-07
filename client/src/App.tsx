@@ -9,7 +9,7 @@ export const App = () => {
 
     if (contextAu.user.authenticated) {
         return (
-            <div>
+            <div className="mainContent">
                 <NavBar />
                 <Orders />
             </div>
@@ -17,10 +17,10 @@ export const App = () => {
     }
 
     return (
-        <>
+        <div className="mainContent">
             <NavBar />
-            <h1>Hey would you like to innovate the way to manage a coffe shop</h1>
-        </>
+            <h1>Hey would you like to innovate the way to manage a coffe shop?</h1>
+        </div>
     )
 }
 
