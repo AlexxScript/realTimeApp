@@ -100,7 +100,8 @@ export const MenuList = () => {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <div>
+                <div className='mainContent'>
+                    <h1>Menu</h1>
                     {data.map((item, index) => (
                         <div className="itemsList" key={index}>
                             <p>{item.item_name + item.description + item.price + item.available + item.quantity}</p>
