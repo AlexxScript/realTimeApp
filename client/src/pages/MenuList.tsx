@@ -100,7 +100,7 @@ export const MenuList = () => {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <div className='mainContent'>
+                <section className="mainContent">
                     <h1>Menu</h1>
                     {data.map((item, index) => (
                         <div className="itemsList" key={index}>
@@ -120,7 +120,7 @@ export const MenuList = () => {
                         </div>
                     ))}
                     <ShoppingCart dataItem={cart} totalAcum={total} />
-                </div>
+                </section>
             )}
         </div>
     );

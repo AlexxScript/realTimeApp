@@ -4,10 +4,12 @@ import { ListItems } from "../components/ListItems";
 
 export const ManageLunch = () => {
     return (
-        <div className='mainContent'>
+        <div>
             <h1>Manage lunches</h1>
+            <section className="mainContent">
             <FormCreateLunch/>
             <ListItems/>
+            </section>
         </div>
     )
 }

@@ -79,7 +79,7 @@ export const Orders = () => {
     }
 
     return (
-        <div className='mainContent'>
+        <div>
             <h1>Orders</h1>
             <h2>Your user id is: {contextAu.user.idUser}</h2>
             {orders.map((item, index) => (

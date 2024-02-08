@@ -123,5 +123,25 @@ body {
 }
 
 .mainContent {
-  margin-top: 50px;
+  max-width: 90%;
+  margin: 50px auto 0 auto;
+}
+
+.profileC{
+  display: flex;
+  margin: 90px auto 0 auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  border: solid 3px var(--mainColor);
+  border-radius: 20px;
+}
+
+.profileC svg {
+  padding: 20px;
+}
+
+.lastElementProfile {
+  padding-bottom: 20px;
 }

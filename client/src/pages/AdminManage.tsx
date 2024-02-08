@@ -37,9 +37,11 @@ export const Dashboard = () => {
     }
 
     return (
-        <section>
+        <main>
             <NavBar />
-            <Outlet />
-        </section>
+            <section className="mainContent">
+                <Outlet />
+            </section>
+        </main>
     );
 };

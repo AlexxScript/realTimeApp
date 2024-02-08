@@ -84,7 +84,7 @@ export const ManageOrders = () => {
     }
     if (contextAu.user.authenticated) {
         return (
-            <div className='mainContent'>
+            <div>
                 <h1>Manage order</h1>
                 {
                     orders.map((item, index) => (
