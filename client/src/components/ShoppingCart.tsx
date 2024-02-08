@@ -56,6 +56,9 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
 
     const makeOrder = () => {
         socket.emit("makeOrderClient",{cart:JSON.stringify(cart),totalAcum,idSchool:contextAu.user.idSchool,email:contextAu.user.email});
+        socket.on("orderCreatedServer",(data) => {
+            setMessageOrder(data.message);
+        })
     };
 
     if (messageOrder === "succes") {
@@ -65,22 +68,20 @@ export const ShoppingCart: React.FC<PropCart> = ({ dataItem, totalAcum }) => {
     return (
         <div className="shoppingCart">
             {dataItem.map((item, index) => (
-                <div key={index}>
+                <div className="shoppingCartItems" key={index}>
                     <h3>{item.item_name}</h3>
                     <p>{item.price}</p>
                     <label htmlFor="">How many?</label>
                     {
                         cart.map((i, index) => (
-                            <h1 key={index}>
+                            <h4 key={index}>
                                 {i.item_name === item.item_name ? i.qY : ''}
-                            </h1>
+                            </h4>
                         ))
                     }
                     <select
                         name={item.item_name}
-                        // value={selectedQuantities[item.item_name] || item.qY}
                         value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
-
                         onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
                     >
                         {[...Array(item.quantity + 1).keys()].map((i) => (

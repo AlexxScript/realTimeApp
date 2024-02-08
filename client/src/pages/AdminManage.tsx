@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { socket } from '../socket/socket';
 import { Navigate, Outlet } from 'react-router-dom';
+import { NavBar } from '../components/NavBar';
 
 export const Dashboard = () => {
     const contextAu = useContext(AuthContext);
@@ -21,11 +22,11 @@ export const Dashboard = () => {
         };
     }, [socket, contextAu.user.idSchool, contextAu.user.email, contextAu.user.authenticated, contextAu.setUser]);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (contextAu.user.authenticated !== false) {
             setLoading(false)
         }
-    },[contextAu.user.authenticated])
+    }, [contextAu.user.authenticated])
 
     if (loading) {
         return <p>Loading...</p>; // Display a loading message while fetching data
@@ -36,6 +37,11 @@ export const Dashboard = () => {
     }
 
     return (
-        <Outlet/>
+        <main>
+            <NavBar />
+            <section className="mainContent">
+                <Outlet />
+            </section>
+        </main>
     );
 };

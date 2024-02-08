@@ -35,7 +35,8 @@ export const LoginUser = () => {
                     authenticated: true,
                     email: data.email,
                     role: data.role,
-                    idSchool:data.idSchool
+                    idSchool: data.idSchool,
+                    idUser: data.idUser
                 });
             }
         } catch (error) {
@@ -44,7 +45,7 @@ export const LoginUser = () => {
     }
 
     if (contextAu.user.authenticated === true) {
-        return <Navigate to="/" replace/>
+        return <Navigate to="/" replace />
     }
 
     return (

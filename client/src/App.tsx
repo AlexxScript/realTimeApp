@@ -1,56 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
-import { socket } from "./socket/socket";
+import React, { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import { NavBar } from "./components/NavBar";
+import { Orders } from "./pages/Orders";
 
 export const App = () => {
 
     const contextAu = useContext(AuthContext);
-    const [loadingS,setLoadingS] = useState<boolean>(true);
-    const [messageW, setMessageW] = useState([]);
-
-    useEffect(() => {
-        const room = contextAu.user.idSchool;
-        const email = contextAu.user.email;
-        if (contextAu.user.authenticated) {
-            socket.emit('joinRoomClient', { room, email });
-        }
-        // socket.on('welcomeMessageServer', (data) => {
-        //     setMessageW((prevMessage)=>[...prevMessage,data])
-        // })
-        socket.on("orderCreatedServer",(data)=>{
-            console.log(JSON.parse(data.content));
-            setMessageW(data.message);
-        })
-        return () => {
-            socket.off('joinRoomClient');
-            // socket.off('welcomeMessageServer');
-        };
-    }, [socket, contextAu.user.idSchool, contextAu.user.email, contextAu.user.authenticated]);
-
-    useEffect(()=>{
-        if (contextAu.user.idSchool !== null) {
-            setLoadingS(false);
-        }
-    },[contextAu.user.idSchool])
-
-    if (loadingS) {
-        return <h1>Loading...</h1>
-    }
 
     if (contextAu.user.authenticated) {
         return (
             <div>
-                {/* {messageW.map((message,index)=>(
-                    <h2 key={index}>hi {message}</h2>
-                ))} */}
+                <NavBar />
+                <section className="mainContent">
+                    <Orders />
+                </section>
             </div>
         )
     }
 
     return (
-        <>
-            <h1>Hey would you like to innovate the way to manage a coffe shop</h1>
-        </>
+        <div className="mainContent">
+            <NavBar />
+            <section className="mainContent">
+
+            <h1>Hey would you like to innovate the way to manage a coffe shop?</h1>
+            </section>
+        </div>
     )
 }
 

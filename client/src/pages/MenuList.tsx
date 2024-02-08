@@ -3,6 +3,7 @@ import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { ShoppingCart } from "../components/ShoppingCart";
+import { NavBar } from "../components/NavBar";
 
 interface ListItem {
     item_name: string; //Item name for each item
@@ -47,6 +48,7 @@ export const MenuList = () => {
     useEffect(() => {
         socket.emit('listItemsClient', { room: contextAu.user.idSchool });
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
+            console.log(data.rows);
             setData(data.rows);
             for(let i of data.rows){
                 i.qY = 0;
@@ -72,7 +74,12 @@ export const MenuList = () => {
                 setLoading(false);
             });
         });
-    }, [socket])
+        return () => {
+            socket.off('existItemMessageServer')
+            socket.off('messageCreatedSuccesServer')
+            socket.off('listItemsClient')
+        }
+    }, [socket,contextAu.user.idSchool])
 
     const handleChange = (itemName: string, quantity: number) => {
         setSelectedQuantities(prevQuantities => ({
@@ -89,16 +96,17 @@ export const MenuList = () => {
 
     return (
         <div>
+            <NavBar/>
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <div>
+                <section className="mainContent">
+                    <h1>Menu</h1>
                     {data.map((item, index) => (
-                        <div key={index}>
+                        <div className="itemsList" key={index}>
                             <p>{item.item_name + item.description + item.price + item.available + item.quantity}</p>
                             <select
                                 name={item.item_name}
-                                // value={selectedQuantities[item.item_name] || 0}
                                 value={cart.find((cartItem) => cartItem.item_name === item.item_name)?.qY || selectedQuantities[item.item_name]}
                                 onChange={(e) => handleChange(item.item_name, parseInt(e.target.value))}
                             >
@@ -112,7 +120,7 @@ export const MenuList = () => {
                         </div>
                     ))}
                     <ShoppingCart dataItem={cart} totalAcum={total} />
-                </div>
+                </section>
             )}
         </div>
     );
