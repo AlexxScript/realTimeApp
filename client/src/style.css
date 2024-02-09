@@ -1,18 +1,24 @@
 :root {
   --separationAxisY: 20px;
   --colorLink: #222; 
-  --mainColor:#D99734;
-  --ulNav:#eca53b;
+  --mainColor:#F7B267;
+  --ulNav:#EBBE9B;
+  /* --bgApp:#272932;
+  --fontColor:#EEEEFF; */
+  --completeColor:#2A7F62;
+  --noComplete:#90323D;
 }
 
 * {
   padding: 0;
   margin: 0;
   font-family: 'Poppins', sans-serif;
+  background-color: var(--bgApp);
 }
 
 body {
   width: 100%;
+  color: var(--fontColor);
 }
 
 /* --------------NAVBAR---------- */
@@ -40,7 +46,8 @@ body {
 
 /* ---------------------ICON SVG ----------------*/
 .burguerButton {
-  color: #fff;
+  background-color: var(--mainColor);
+  color: var(--fontColor);
   height: 30px;
   width: 30px;
 }
@@ -52,6 +59,7 @@ body {
   display: flex;
   height: 100vh;
   flex-direction: column;
+  background-color: var(--mainColor);
 }
 
 .inactive{
@@ -71,6 +79,7 @@ body {
   padding: 10px;
   list-style: none;
   transition: 0.2s;
+  background-color: var(--mainColor);
 }
 
 .active li:hover{
@@ -82,6 +91,7 @@ body {
   text-decoration: none;
   font-size: 17px;
   color: var(--colorLink);
+  background-color: transparent;
 }
 
 .ulNavbar li button {
@@ -114,18 +124,16 @@ body {
   margin: var(--separationAxisY) 0px;
 }
 
-.listOrdersClient {
-  margin: var(--separationAxisY) 0px;
-}
-
-.listContentClient {
-  margin: var(--separationAxisY) 0px;
-}
+/* ----------------------------------MAIN CONTAINER---------------- */
 
 .mainContent {
   max-width: 90%;
   margin: 50px auto 0 auto;
 }
+
+/* ----------------------------------MAIN CONTAINER---------------- */
+
+/* ------------------------------PROFILE PAGE---------------------- */
 
 .profileC{
   display: flex;
@@ -145,3 +153,41 @@ body {
 .lastElementProfile {
   padding-bottom: 20px;
 }
+
+/* ------------------------------PROFILE PAGE---------------------- */
+
+/* -----------------ORDERS PAGE-------------------------- */
+.listOrdersClient {
+  padding: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-bottom: solid 3px var(--colorLink);
+}
+
+.listContentClient {
+  margin: 5px 0px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: solid 2px var(--colorLink);
+}
+
+.statusOrder{
+  display: flex;
+  gap: 5px;
+}
+
+/* .statusOrder svg {
+  color: var(--completeColor);
+} */
+
+.nocomplete {
+  color: var(--noComplete);
+}
+
+.complete {
+  color: var(--completeColor);
+}
+/* -----------------ORDERS PAGE-------------------------- */
