@@ -10,8 +10,8 @@ export const App = () => {
     if (contextAu.user.authenticated) {
         return (
             <div>
-                <NavBar />
                 <section className="mainContent">
+                <NavBar />
                     <Orders />
                 </section>
             </div>
@@ -19,13 +19,12 @@ export const App = () => {
     }
 
     return (
-        <div className="mainContent">
-            <NavBar />
-            <section className="mainContent">
-
-            <h1>Hey would you like to innovate the way to manage a coffe shop?</h1>
+        <main>
+                <NavBar />
+                <section className="mainContent">
+                <h1>Hey would you like to innovate the way to manage a coffe shop?</h1>
             </section>
-        </div>
+        </main>
     )
 }
 
