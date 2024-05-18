@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 :root {
   --separationAxisY: 20px;
   --colorLink: #222; 
@@ -54,7 +58,7 @@ body {
 /* ----------------------ICON SVG-------------------- */
 
 .ulNavbar{
-  width: 70%;
+  width: 30%;
   margin-top: 2px;
   display: flex;
   height: 100vh;
@@ -128,7 +132,7 @@ body {
 
 .mainContent {
   max-width: 90%;
-  margin: 50px auto 0 auto;
+  margin: 40px auto 0 auto;
 }
 
 /* ----------------------------------MAIN CONTAINER---------------- */

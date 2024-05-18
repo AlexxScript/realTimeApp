@@ -5,10 +5,9 @@ import { ListItems } from "../components/ListItems";
 export const ManageLunch = () => {
     return (
         <div>
-            <h1>Manage lunches</h1>
             <section className="mainContent">
-            <FormCreateLunch/>
-            <ListItems/>
+                <FormCreateLunch />
+                <ListItems />
             </section>
         </div>
     )
