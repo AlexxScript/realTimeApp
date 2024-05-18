@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
 
 interface ListOrder {
     id_orders: any;
@@ -76,6 +77,10 @@ export const Orders = () => {
 
     if (loadingS) {
         return <h1>Loading...</h1>
+    }
+
+    if (!contextAu.user.authenticated) {
+        return <Navigate to="/" />
     }
 
     return (

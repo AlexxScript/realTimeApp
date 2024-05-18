@@ -33,6 +33,7 @@ body {
   height: 40px;
   position: fixed;
   top: 0;
+  /* bottom: 0vh; */
   z-index: 100;
 }
 

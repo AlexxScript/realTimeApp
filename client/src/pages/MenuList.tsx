@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { ShoppingCart } from "../components/ShoppingCart";
 import { NavBar } from "../components/NavBar";
+import { Navigate } from "react-router-dom";
 
 interface ListItem {
     item_name: string; //Item name for each item
@@ -24,7 +25,6 @@ export const MenuList = () => {
     const [total, setTotal] = useState<number>(0); //Total amount to pay
 
     useEffect(() => {
-
         const room = contextAu.user.idSchool;
         const email = contextAu.user.email;
 
@@ -92,6 +92,10 @@ export const MenuList = () => {
     const handleCart = (item: ListItem) => {
         dispatch({ type: "ADD_TO_CART", payload: item, qY: selectedQuantities[item.item_name] });
         console.log(total);
+    }
+
+    if (!contextAu.user.authenticated) {
+        return <Navigate to="/" />
     }
 
     return (

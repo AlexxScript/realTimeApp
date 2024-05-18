@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { NavBar } from "../components/NavBar";
+import { Navigate } from "react-router-dom";
 
 export const Profile = () => {
 
     const contextAu = useContext(AuthContext);
+
+    if (!contextAu.user.authenticated) {
+        return <Navigate to="/" />
+    }
 
     return (
         <main>
