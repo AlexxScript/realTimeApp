@@ -54,7 +54,7 @@ export const LoginUser = () => {
             <NavBar/>
             <div className="bg-white">
                 <div className="flex h-screen flex-col items-center justify-center">
-                    <div className="rounded-md border-2 border-[#e25c148a] p-5 max-h-auto mx-auto w-4/6 max-w-xl">
+                    <div className="shadow rounded-3xl sm:p-10 p-5 max-h-auto mx-auto w-4/6 max-w-xl">
                         <div className="mb-8 space-y-3">
                             <p className="text-xl font-semibold">Login</p>
                             <p className="text-gray-500">Enter your email to log in</p>

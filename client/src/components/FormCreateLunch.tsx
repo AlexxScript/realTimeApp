@@ -63,8 +63,7 @@ export const FormCreateLunch = () => {
                 <div className="relative px-1 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
                     <div className="max-w-md mx-auto">
                         <div className="flex items-center space-x-5">
-                            <div className="h-24 w-24 bg-yellow-200 rounded-full flex flex-shrink-0 justify-center items-center text-yellow-500 text-2xl font-mono">i</div>
-                            <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
+                            <div className="flex justify-center items-center flex-col pl-2 font-semibold text-xl self-start text-gray-700">
                                 <h2 className="leading-relaxed">Create a Lunch</h2>
                                 <p className="text-sm text-gray-500 font-normal leading-relaxed">Let's create a lunch</p>
                             </div>

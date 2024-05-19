@@ -44,7 +44,7 @@ export const RegisterSchool = () => {
             <NavBar/>
             <div className="bg-white">
                 <div className="flex h-screen flex-col items-center justify-center">
-                    <div className="max-h-auto mx-auto w-4/6 max-w-xl">
+                    <div className="shadow rounded-3xl sm:p-10 p-5 max-h-auto mx-auto w-4/6 max-w-xl">
                         <div className="mb-5 space-y-1">
                             <p className="text-xl font-semibold">Register school</p>
                             <p className="text-gray-500">Enter necessary data to register</p>

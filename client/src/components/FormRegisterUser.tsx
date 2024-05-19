@@ -40,7 +40,7 @@ export const FormRegisterUser = () => {
         <NavBar/>
             <div className="bg-white">
                 <div className="flex h-screen flex-col items-center justify-center">
-                    <div className="rounded-md border-2 border-[#e25c148a] max-h-auto mx-auto w-4/6 max-w-xl p-5">
+                    <div className="shadow rounded-3xl sm:p-10 max-h-auto mx-auto w-4/6 max-w-xl p-5">
                         <div className="mb-5 space-y-1">
                             <p className="text-xl font-semibold">Register user</p>
                             <p className="text-gray-500">Enter necessary data to register</p>
