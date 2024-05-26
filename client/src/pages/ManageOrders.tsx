@@ -131,21 +131,18 @@ export const ManageOrders = () => {
                                                         </td>
                                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p className="text-gray-900 whitespace-no-wrap">
-                                                                Jan 21, 2020
+                                                                {it.qY}
                                                             </p>
                                                         </td>
                                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                             <p className="text-gray-900 whitespace-no-wrap">
-                                                                43
+                                                                {it.price}
                                                             </p>
                                                         </td>
                                                         <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <span
-                                                                className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                                                <span aria-hidden
-                                                                    className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                                                <span className="relative">Activo</span>
-                                                            </span>
+                                                            <p className="text-gray-900 whitespace-no-wrap">
+                                                                {it.price*it.qY}
+                                                            </p>
                                                         </td>
                                                     </tr>
                                                 ))}
