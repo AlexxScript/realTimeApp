@@ -87,70 +87,88 @@ export const ManageOrders = () => {
         return (
             <div>
                 <h1>Manage order</h1>
-                <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                <div className="inline-block min-w-full overflow-hidden">
 
                     {
                         orders.map((item, index) => (
 
-                            <div key={index} className="min-w-full leading-normal my-3">
+                            <div key={index} className="min-w-full leading-normal mt-10">
                                 {
                                     !item.is_completed ?
-                                        <table className="min-w-full leading-normal">
-                                            <thead>
-                                                <tr>
-                                                    <th
-                                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                        Time
-                                                    </th>
-                                                    <th
-                                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                        Item name
-                                                    </th>
-                                                    <th
-                                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                        Qy
-                                                    </th>
-                                                    <th
-                                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                        Unitary price
-                                                    </th>
-                                                    <th
-                                                        className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                                        Total amount
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody >
-                                                {item.orders_content.map((it: Order, ind: number) => (
-                                                    <tr key={ind}>
-                                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            {`Time ${new Date(item.orders_time).getHours()}:${new Date(item.orders_time).getMinutes()}`}
-                                                        </td>
-                                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p className="text-gray-900 whitespace-no-wrap">{it.item_name}</p>
-                                                        </td>
-                                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p className="text-gray-900 whitespace-no-wrap">
-                                                                {it.qY}
-                                                            </p>
-                                                        </td>
-                                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p className="text-gray-900 whitespace-no-wrap">
-                                                                {it.price}
-                                                            </p>
-                                                        </td>
-                                                        <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                            <p className="text-gray-900 whitespace-no-wrap">
-                                                                {it.price*it.qY}
-                                                            </p>
-                                                        </td>
+                                        <div className='border-solid border-2'>
+                                            <table className="min-w-full leading-normal">
+                                                <thead>
+                                                    <tr>
+                                                        <th
+                                                            className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                            Time
+                                                        </th>
+                                                        <th
+                                                            className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                            Item name
+                                                        </th>
+                                                        <th
+                                                            className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                            Qy
+                                                        </th>
+                                                        <th
+                                                            className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                            Unitary price
+                                                        </th>
+                                                        <th
+                                                            className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                            Total item
+                                                        </th>
                                                     </tr>
-                                                ))}
+                                                </thead>
+                                                <tbody >
+                                                    {item.orders_content.map((it: Order, ind: number) => (
+                                                        <tr key={ind}>
+                                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                {`${new Date(item.orders_time).getHours()}:${new Date(item.orders_time).getMinutes()}`}
+                                                            </td>
+                                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                <p className="text-gray-900 whitespace-no-wrap">{it.item_name}</p>
+                                                            </td>
+                                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                                    {it.qY}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                                    {it.price}
+                                                                </p>
+                                                            </td>
+                                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                                    {it.price * it.qY}
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
 
-                                            </tbody>
-                                            <button onClick={() => handleClick(item.id_orders, item.school_id)}>Complete order</button>
-                                            <button onClick={() => handleCancelOrder(item.id_orders, item.school_id)}>Cancel order</button>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                            <div className='flex flex-row justify-around items-center gap-4 my-4'>
+                                                <h3> ID user is: {item.user_id}</h3>
+                                                <h3> Total to pay is: {item.total_amount}</h3>
+                                            </div>
+                                            <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+                                                <div className="inline-flex mt-2 xs:mt-0 gap-2">
+                                                    <button
+                                                        onClick={() => handleClick(item.id_orders, item.school_id)}
+                                                        className="text-sm text-indigo-50 transition duration-150 hover:bg-[#387942] bg-[#479a53] font-semibold py-2 px-4 rounded-l">
+                                                        Complete order
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleCancelOrder(item.id_orders, item.school_id)}
+                                                        className="text-sm text-indigo-50 transition duration-150 hover:bg-[#a43947] bg-[#D1495B] font-semibold py-2 px-4 rounded-r">
+                                                        Cancel order
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                         :
                                         <div></div>
                                 }
@@ -158,32 +176,6 @@ export const ManageOrders = () => {
                         ))
                     }
                 </div>
-                {
-                    orders.map((item, index) => (
-                        <div className='listOrdersAdmin' key={index}>
-                            {
-                                !item.is_completed ?
-                                    <div>
-                                        <h1>{item.total_amount}</h1>
-                                        <h2>Id user is: {item.user_id}</h2>
-                                        {item.orders_content.map((it: Order, ind: number) => (
-                                            <div className='listContentAdmin' key={ind}>
-                                                <h3>{it.item_name}</h3>
-                                                <h4>Quantity:{it.qY} Unitary price:{it.price}</h4>
-                                            </div>
-                                        ))}
-                                        {`Time ${new Date(item.orders_time).getHours()}:${new Date(item.orders_time).getMinutes()}`}
-                                        <button onClick={() => handleClick(item.id_orders, item.school_id)}>Complete order</button>
-                                        <button onClick={() => handleCancelOrder(item.id_orders, item.school_id)}>Cancel order</button>
-                                    </div>
-                                    :
-                                    <div>
-
-                                    </div>
-                            }
-                        </div>
-                    ))
-                }
             </div>
         )
     }

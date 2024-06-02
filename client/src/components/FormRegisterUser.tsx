@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavBar } from "./NavBar";
+import { Link } from "react-router-dom";
 
 export const FormRegisterUser = () => {
     
@@ -110,6 +111,7 @@ export const FormRegisterUser = () => {
                                 <button className="ring-offset-background focus-visible:ring-ring flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-[#e25d14] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#bb4613] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" type="submit">Login</button>
                             </div>
                         </form>
+                        <div className="text-center"> Do you have an account? <Link className="text-[#e25d14]" to="/login">Log in</Link> </div>
                     </div>
                 </div>
             </div>
