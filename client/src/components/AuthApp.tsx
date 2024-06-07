@@ -11,6 +11,7 @@ import { ManageLunch } from '../pages/ManageLunch';
 import { MenuList } from '../pages/MenuList';
 import { ShoppingCartProvider } from '../context/ShoppingCartContext';
 import { Profile } from '../pages/Profile';
+import { UpdateLunch } from '../pages/UpdateLunch';
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,9 @@ const router = createBrowserRouter([
             }, {
                 path: '/admin/manage',
                 element: <ManageLunch />
+            }, {
+                path: '/admin/manage/:lunchId',
+                element: <UpdateLunch/>
             }
         ]
     }, {

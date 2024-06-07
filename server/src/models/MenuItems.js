@@ -39,4 +39,17 @@ export class MenuItems {
             connection.release();
         }
     }
+
+    async updateItem (schoolId,name,description,price,available,qyItems){
+        const connection = await pool.connect();
+        try {
+            const qy = "UPDATE menu_items SET item_name=$1,description=$2,price=$3,available=$4 WHERE item_name=$5 AND school_id=$6";
+            const result = await connection.query(qy,[name,description,price,available,name,schoolId]);
+            return result;
+        } catch (error) {
+            console.log(error)
+        } finally {
+            connection.release
+        }
+    }
 }
