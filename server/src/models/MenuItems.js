@@ -14,11 +14,11 @@ export class MenuItems {
         }
     }
 
-    async consultItem(name, schoolId) {
+    async consultItem(id, schoolId) {
         const connection = await pool.connect();
         try {
-            const qy = "SELECT item_name FROM menu_items WHERE school_id = $1 AND item_name = $2";
-            const result = await connection.query(qy, [schoolId, name]);
+            const qy = "SELECT * FROM menu_items WHERE school_id = $1 AND id_item = $2";
+            const result = await connection.query(qy, [schoolId, id]);
             return result;
         } catch (error) {
             console.log(error);
@@ -40,16 +40,17 @@ export class MenuItems {
         }
     }
 
-    async updateItem (schoolId,name,description,price,available,qyItems){
+    async updateItem (schoolId,name,description,price,available,qyItems,idItem){
         const connection = await pool.connect();
         try {
-            const qy = "UPDATE menu_items SET item_name=$1,description=$2,price=$3,available=$4 WHERE item_name=$5 AND school_id=$6";
-            const result = await connection.query(qy,[name,description,price,available,name,schoolId]);
+            console.log("objeto de bd",schoolId,name,description,price,available,qyItems);
+            const qy = "UPDATE menu_items SET item_name=$1,description=$2,price=$3,available=$4,quantity=$5 WHERE id_item=$6 AND school_id=$7";
+            const result = await connection.query(qy,[name,description,price,available,qyItems,idItem,schoolId]);
             return result;
         } catch (error) {
             console.log(error)
         } finally {
-            connection.release
+            connection.release();
         }
     }
 }

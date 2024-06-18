@@ -32,7 +32,7 @@ const initializeSocketIO = (httpServer) => {
         
         socket.on('createLunchCliente', async (data) => {
             const { nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool, qyItems } = data;
-            console.log(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool, qyItems)
+            // console.log(nameLunch, descriptionLunch, priceLunch, availableLunch, idSchool, qyItems)
             const parseId = parseInt(idSchool)
             const parseQy = parseInt(qyItems)
             try {
@@ -55,6 +55,7 @@ const initializeSocketIO = (httpServer) => {
             try {
                 const menuItems = new MenuItems();
                 const result = await menuItems.consultAllItems(room);
+                console.log(result);
                 io.in(room).emit('listItemsServer', result)
             } catch (error) {
                 console.log(error);
@@ -106,6 +107,30 @@ const initializeSocketIO = (httpServer) => {
                 await order.deleteOrder(data.idOrder,data.idSchool)
                 const result = await order.listAllOrders(data.idSchool);
                 io.in(data.idSchool).emit("listOrdersServer", { result })
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        socket.on("callItemClient",async(data) => {
+            const { id, schoolId } = data;
+            try{
+                socket.join(schoolId);
+                const menuItems = new MenuItems();
+                const result = await menuItems.consultItem(id,schoolId);
+                io.in(schoolId).emit('responseItemServer', result);
+            } catch (error) {
+                console.log(error);
+            } 
+        })
+
+        socket.on("updateItemClient",async (data)=>{
+            const { item, descriptionLunch, priceLunch, availableLunch, idSchool, qyItems, idItem } = data;
+            try {
+                socket.join(idSchool);
+                const menuItems = new MenuItems();
+                await menuItems.updateItem(idSchool,item,descriptionLunch,priceLunch,availableLunch,qyItems,idItem);
+                io.in(idSchool).emit("updateItemServer",{message:"succes"});
             } catch (error) {
                 console.log(error);
             }
