@@ -14,11 +14,12 @@ export class MenuItems {
         }
     }
 
-    async consultItem(id, schoolId) {
+    async consultItem(nameLunch, schoolId) {
         const connection = await pool.connect();
         try {
-            const qy = "SELECT * FROM menu_items WHERE school_id = $1 AND id_item = $2";
-            const result = await connection.query(qy, [schoolId, id]);
+            const qy = "SELECT * FROM menu_items WHERE school_id = $1 AND item_name = $2";
+            const result = await connection.query(qy, [schoolId, nameLunch]);
+            console.log(result);
             return result;
         } catch (error) {
             console.log(error);

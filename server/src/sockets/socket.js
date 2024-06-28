@@ -38,6 +38,7 @@ const initializeSocketIO = (httpServer) => {
             try {
                 const menuItems = new MenuItems();
                 const checkExis = await menuItems.consultItem(nameLunch, parseId);
+                console.log(checkExis.rows);
                 if (checkExis.rows.length > 0) {
                     io.in(idSchool).emit('existItemMessageServer', { message: "Item exist in the menu" })
                 } else {

@@ -61,13 +61,15 @@ export const ListItems = () => {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <table className="border-collapse w-full">
+                <table className="border-collapse w-full mb-7">
                     <thead>
                         <tr>
                             <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Item name</th>
                             <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Item description</th>
-                            <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Status</th>
-                            <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Actions</th>
+                            <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Item price</th>
+                            <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Quantity</th>
+                            <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Available</th>
+                            <th className="p-3 font-bold uppercase bg-gray-200 text-gray-600 border border-gray-300 hidden lg:table-cell">Edit</th>
                         </tr>
                     </thead>
                     {data.map((item, index) => (
@@ -75,18 +77,21 @@ export const ListItems = () => {
                         <tbody key={index}>
                             <tr className="bg-white lg:hover:bg-gray-100 flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
                                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Company name</span>
                                     {item.item_name}
                                 </td>
                                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Country</span>
                                     {item.description}
                                 </td>
                                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                    <span className="rounded bg-green-400 py-1 px-3 text-xs font-bold">active</span>
+                                    {item.price}
                                 </td>
                                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
-                                    <span className="lg:hidden absolute top-0 left-0 bg-blue-200 px-2 py-1 text-xs font-bold uppercase">Actions</span>
+                                    {item.quantity}
+                                </td>
+                                <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
+                                    <span className={item.available ? "p-2 bg-green-500 rounded-md" : "p-2 bg-red-500 rounded-md"}>{item.available ? "Available" : "Unavailable"}</span>
+                                </td>
+                                <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                     <Link to={`/admin/manage/${item.id_item}`} className="text-blue-400 hover:text-blue-600 underline">Edit</Link>
                                     <Link to="#" className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link>
                                 </td>

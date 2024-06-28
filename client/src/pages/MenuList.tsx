@@ -120,7 +120,9 @@ export const MenuList = () => {
                                     </option>
                                 ))}
                             </select>
-                            <button onClick={() => handleCart(item)}>add to cart</button>
+                            {
+                                item.available ? <button onClick={() => handleCart(item)}>add to cart</button> : <button disabled>add to cart</button> 
+                            }
                         </div>
                     ))}
                     <ShoppingCart dataItem={cart} totalAcum={total} />
