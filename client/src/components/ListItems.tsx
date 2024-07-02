@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { socket } from "../socket/socket";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { ConfirmModal } from "./ConfirmModal";
 
 interface ListItem {
     id_item: any,
@@ -17,6 +18,7 @@ export const ListItems = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState<ListItem[]>([]);
     const [message, setMessage] = useState('');
+    const [modal, setModal] = useState<boolean>(false);
 
     useEffect(() => {
         socket.emit('listItemsClient', { room: contextAu.user.idSchool });
@@ -24,9 +26,7 @@ export const ListItems = () => {
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
             setData(data.rows);
             setLoading(false);
-            console.log(data.rows);
         });
-        console.log(data);
 
         return () => {
             socket.off('listItemsClient');
@@ -45,7 +45,6 @@ export const ListItems = () => {
             socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
                 setData(data.rows);
                 setLoading(false);
-                console.log(data.rows);
             });
         });
         return () => {
@@ -54,6 +53,10 @@ export const ListItems = () => {
             socket.off('listItemsClient');
         }
     }, [socket, contextAu.user.idSchool])
+
+    const handleWindowModal = () => {
+
+    }
 
     return (
         <div>
@@ -93,7 +96,8 @@ export const ListItems = () => {
                                 </td>
                                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                     <Link to={`/admin/manage/${item.id_item}`} className="text-blue-400 hover:text-blue-600 underline">Edit</Link>
-                                    <Link to="#" className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link>
+                                    {/* <Link to="#" className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link> */}
+                                    <button className="mx-3 text-blue-400 hover:text-blue-600 underline">Remove</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -101,6 +105,7 @@ export const ListItems = () => {
                     ))}
                 </table>
             )}
+            <ConfirmModal modal={modal} />
         </div>
     );
 };

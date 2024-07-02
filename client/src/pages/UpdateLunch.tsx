@@ -14,12 +14,12 @@ interface ListItem {
 
 
 export const UpdateLunch = () => {
-    
+
     const [loading, setLoading] = useState(true);
     const [fields, setFields] = useState({
         id_item: "",
         item_name: "",
-        description:"",
+        description: "",
         price: 0,
         quantity: 0,
         available: false,
@@ -29,18 +29,18 @@ export const UpdateLunch = () => {
     const { lunchId } = useParams();
 
     useEffect(() => {
-        socket.emit("callItemClient",{
-            id:lunchId,
-            schoolId:contextAu.user.idSchool
+        socket.emit("callItemClient", {
+            id: lunchId,
+            schoolId: contextAu.user.idSchool
         })
-        socket.on("responseItemServer",(data:{rows: ListItem[]})=>{
+        socket.on("responseItemServer", (data: { rows: ListItem[] }) => {
             setFields({
-                id_item:data.rows[0].id_item,
-                item_name:data.rows[0].item_name,
-                description:data.rows[0].description,
-                price:data.rows[0].price,
-                quantity:data.rows[0].quantity,
-                available:data.rows[0].available
+                id_item: data.rows[0].id_item,
+                item_name: data.rows[0].item_name,
+                description: data.rows[0].description,
+                price: data.rows[0].price,
+                quantity: data.rows[0].quantity,
+                available: data.rows[0].available
             });
             setLoading(false);
         })
@@ -50,7 +50,7 @@ export const UpdateLunch = () => {
             socket.off('callItemClient');
             setLoading(true);
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         const room = contextAu.user.idSchool;
@@ -92,7 +92,7 @@ export const UpdateLunch = () => {
         e.preventDefault();
         console.log(fields);
         socket.emit('updateItemClient', {
-            idItem:fields.id_item,
+            idItem: fields.id_item,
             item: fields.item_name,
             descriptionLunch: fields.description,
             priceLunch: fields.price,
@@ -100,13 +100,13 @@ export const UpdateLunch = () => {
             idSchool: contextAu.user.idSchool,
             qyItems: fields.quantity
         });
-        socket.on("updateItemServer",(data)=>{
-            console.log(data);
+        socket.on("updateItemServer", (data) => {
+           setStateNav(data.message);
         })
     };
 
     if (stateNav == "succes") {
-        return <Navigate to="/admin/manage"/>
+        return <Navigate to="/admin/manage" />
     }
 
     if (loading) {
@@ -175,13 +175,13 @@ export const UpdateLunch = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col">
-                                        <label className="leading-loose">Lunch price</label>
-                                        <input type="number" className="px-2 py-2 border focus:ring-gray-500 focus:border-[#e25d14] w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Lunch name"
-                                            onChange={handleChange}
-                                            value={fields.price}
-                                            name="price"
-                                        />
-                                    </div>
+                                    <label className="leading-loose">Lunch price</label>
+                                    <input type="number" className="px-2 py-2 border focus:ring-gray-500 focus:border-[#e25d14] w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Lunch name"
+                                        onChange={handleChange}
+                                        value={fields.price}
+                                        name="price"
+                                    />
+                                </div>
                                 <div className="pt-4 flex items-center space-x-4">
                                     <button className="bg-[#e25d14] flex justify-center items-center w-full text-white px-2 py-2 rounded-md focus:outline-none" type="submit">Edit</button>
                                 </div>

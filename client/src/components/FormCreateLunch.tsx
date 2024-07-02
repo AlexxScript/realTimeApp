@@ -114,6 +114,14 @@ export const FormCreateLunch = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="flex flex-col">
+                                <label className="leading-loose">Lunch price</label>
+                                <input type="number" className="px-2 py-2 border focus:ring-gray-500 focus:border-[#e25d14] w-full sm:text-sm border-gray-300 rounded-md focus:outline-none text-gray-600" placeholder="Lunch name"
+                                    onChange={handleChange}
+                                    value={fields.priceLunch}
+                                    name="priceLunch"
+                                />
+                            </div>
                             <div className="pt-4 flex items-center space-x-4">
                                 <button className="bg-[#e25d14] flex justify-center items-center w-full text-white px-2 py-2 rounded-md focus:outline-none" type="submit">Create</button>
                             </div>
