@@ -54,8 +54,9 @@ export const ListItems = () => {
         }
     }, [socket, contextAu.user.idSchool])
 
-    const handleWindowModal = () => {
-
+    const handleWindowModal = ():void => {
+        setModal(!modal);
+        console.log(modal);
     }
 
     return (
@@ -97,7 +98,7 @@ export const ListItems = () => {
                                 <td className="w-full lg:w-auto p-3 text-gray-800 text-center border border-b block lg:table-cell relative lg:static">
                                     <Link to={`/admin/manage/${item.id_item}`} className="text-blue-400 hover:text-blue-600 underline">Edit</Link>
                                     {/* <Link to="#" className="text-blue-400 hover:text-blue-600 underline pl-6">Remove</Link> */}
-                                    <button className="mx-3 text-blue-400 hover:text-blue-600 underline">Remove</button>
+                                    <button onClick={handleWindowModal} className="mx-3 text-blue-400 hover:text-blue-600 underline">Remove</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -105,7 +106,7 @@ export const ListItems = () => {
                     ))}
                 </table>
             )}
-            <ConfirmModal modal={modal} />
+            <ConfirmModal modal={modal} handleWindowModal={handleWindowModal} />
         </div>
     );
 };
