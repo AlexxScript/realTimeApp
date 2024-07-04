@@ -136,6 +136,18 @@ const initializeSocketIO = (httpServer) => {
                 console.log(error);
             }
         })
+
+        socket.on("deleteItemClient",async (data) => {
+            const {idItem, itemName, idSchool} = data;
+            try {
+               socket.join(idSchool);
+               const menuItems = new MenuItems();
+               await menuItems.deleteItem(idItem,itemName,idSchool);
+               io.in(idSchool).emit("deleteItemServer",{message:"succes"}); 
+            } catch (error) {
+                console.log(error);
+            }
+        })
     });
 
     return io;

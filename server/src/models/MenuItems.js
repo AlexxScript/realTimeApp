@@ -66,4 +66,17 @@ export class MenuItems {
             connection.release();
         }
     }
+
+    async deleteItem(idItem,itemName,idSchool){
+        const connection = await pool.connect();
+        try {
+            const qy = "DELETE FROM menu_items WHERE id_item=$1 AND item_name=$2 AND school_id=$3";
+            const result = await connection.query(qy,[idItem,itemName,idSchool]);
+            return result;
+        } catch (error) {
+            console.log(error);
+        } finally {
+            connection.release();
+        }
+    }
 }
