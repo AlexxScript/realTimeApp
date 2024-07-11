@@ -50,7 +50,7 @@ export const MenuList = () => {
         socket.on('listItemsServer', (data: { rows: ListItem[] }) => {
             console.log(data.rows);
             setData(data.rows);
-            for(let i of data.rows){
+            for (let i of data.rows) {
                 i.qY = 0;
             }
         });
@@ -79,7 +79,7 @@ export const MenuList = () => {
             socket.off('messageCreatedSuccesServer')
             socket.off('listItemsClient')
         }
-    }, [socket,contextAu.user.idSchool])
+    }, [socket, contextAu.user.idSchool])
 
     const handleChange = (itemName: string, quantity: number) => {
         setSelectedQuantities(prevQuantities => ({
@@ -100,7 +100,7 @@ export const MenuList = () => {
 
     return (
         <div>
-            <NavBar/>
+            <NavBar />
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -121,13 +121,14 @@ export const MenuList = () => {
                                 ))}
                             </select>
                             {
-                                item.available ? <button onClick={() => handleCart(item)}>add to cart</button> : <button disabled>add to cart</button> 
+                                item.available ? <button onClick={() => handleCart(item)}>add to cart</button> : <button disabled>add to cart</button>
                             }
                         </div>
                     ))}
-                    <ShoppingCart dataItem={cart} totalAcum={total} />
                 </section>
             )}
+            {/* <ShoppingCart dataItem={cart} totalAcum={total} /> */}
+            {/* <ShoppingCart /> */}
         </div>
     );
 }
