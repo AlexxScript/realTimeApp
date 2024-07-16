@@ -91,7 +91,7 @@ export const MenuList = () => {
 
     const handleCart = (item: ListItem) => {
         dispatch({ type: "ADD_TO_CART", payload: item, qY: selectedQuantities[item.item_name] });
-        console.log(total);
+        alert("Added to cart")
     }
 
     if (!contextAu.user.authenticated) {
