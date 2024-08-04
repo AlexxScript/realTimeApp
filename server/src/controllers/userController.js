@@ -50,7 +50,10 @@ export const logInUSer = async (req, res) => {
 
 export const logOut = (req, res) => {
     res.cookie("token","",{
-        sameSite:"none"
+        expires: new Date(0),
+        httpOnly: true, 
+        secure: true, 
+        sameSite: "none",
     });
     return res.status(200).json({message:"Log out succesfully",state:"unauthenticated"});
 }
