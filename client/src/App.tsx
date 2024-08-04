@@ -9,22 +9,26 @@ export const App = () => {
 
     if (contextAu.user.authenticated) {
         return (
-            <main>
+            <>
                 <NavBar />
-                <section className="mainContent">
-                    <Orders />
-                </section>
-            </main>
+                <main>
+                    <section className="mainContent">
+                        <Orders />
+                    </section>
+                </main>
+            </>
         )
     }
 
     return (
-        <main>
+        <>
             <NavBar />
-            <section className="mainContent">
-                <h1>Hey would you like to innovate the way to manage a coffe shop?</h1>
-            </section>
-        </main>
+            <main>
+                <section className="mainContent">
+                    <h1>Hey would you like to innovate the way to manage a coffe shop?</h1>
+                </section>
+            </main>
+        </>
     )
 }
 
