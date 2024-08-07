@@ -70,7 +70,7 @@ const initializeSocketIO = (httpServer) => {
                 const user = new User();
                 const idUser = await user.selectUser(data.email);
                 console.log(idUser.rows[0].id_users);
-                const content = await order.createOrder(data.idSchool, data.cart, data.totalAcum, false, idUser.rows[0].id_users)
+                const content = await order.createOrder(data.idSchool, data.cart, data.totalAcum, 'FALSE', idUser.rows[0].id_users)
                 io.in(data.idSchool).emit("orderCreatedServer", { message: "succes", content: content })
             } catch (error) {
                 console.log(error);
@@ -94,6 +94,18 @@ const initializeSocketIO = (httpServer) => {
             socket.join(data.idSchool);
             try {
                 const result = await order.updateOrderStatus(data.idOrder);
+                console.log(result);
+                io.in(data.idSchool).emit("messageUpdateStatusServer", { result });
+            } catch (error) {
+                console.log(error);
+            }
+        })
+
+        socket.on("updateStatusPickedupClient", async (data) => {
+            const order = new Order();
+            socket.join(data.idSchool);
+            try {
+                const result = await order.updatePickedUpStatus(data.idOrder);
                 console.log(result);
                 io.in(data.idSchool).emit("messageUpdateStatusServer", { result });
             } catch (error) {

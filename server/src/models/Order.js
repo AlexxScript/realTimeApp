@@ -31,7 +31,20 @@ export class Order {
     async updateOrderStatus (idOrder) {
         const connection = await pool.connect();
         try {
-            const qy = "UPDATE orders SET is_completed=true WHERE id_orders = $1";
+            const qy = "UPDATE orders SET is_completed='COMPLETED' WHERE id_orders = $1";
+            await connection.query(qy,[idOrder]);
+            return "succes";
+        } catch (error) {
+            console.log(`database error: ${error}`);
+        } finally {
+            connection.release();
+        }
+    }
+
+    async updatePickedUpStatus (idOrder) {
+        const connection = await pool.connect();
+        try {
+            const qy = "UPDATE orders SET is_completed='PICKED' WHERE id_orders = $1";
             await connection.query(qy,[idOrder]);
             return "succes";
         } catch (error) {

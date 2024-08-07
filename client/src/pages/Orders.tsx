@@ -10,7 +10,7 @@ interface ListOrder {
     orders_content: any;
     orders_time: any,
     total_amount: number;
-    is_completed: boolean;
+    is_completed: any;
 }
 
 interface Order {
@@ -18,7 +18,7 @@ interface Order {
     item_name: string;
     price: any;
     qY: number;
-    is_completed: boolean;
+    is_completed: any;
 }
 
 export const Orders = () => {
@@ -90,7 +90,7 @@ export const Orders = () => {
             {orders.map((item, index) => (
                 <div className="listOrdersClient" key={index}>
                     {
-                        (item.user_id === contextAu.user.idUser && !item.is_completed) ? <button onClick={() => buttonCancelOrder(item.id_orders, item.school_id)}>Cancel order</button> : ''
+                        (item.user_id === contextAu.user.idUser && item.is_completed === "FALSE") ? <button onClick={() => buttonCancelOrder(item.id_orders, item.school_id)}>Cancel order</button> : ''
                     }
                     <h2>{item.total_amount}</h2>
                     <h3>Id user: {item.user_id}</h3>
@@ -100,27 +100,45 @@ export const Orders = () => {
                             <h3>{it.item_name}</h3>
                             <h4>Qy:{it.qY}</h4>
                             <h4>Item price:{it.price}</h4>
-                            <h4>Item total:{it.price*it.qY}</h4>
+                            <h4>Item total:{it.price * it.qY}</h4>
                         </div>
                     ))}
-                    {
-                        item.is_completed ?
-                            <div className="statusOrder complete">
-                                <h4>completed</h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                    <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
-                                </svg>
-                            </div>
-                            :
-                            <div className="statusOrder nocomplete">
-                                <h4>No completed</h4>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                                </svg>
-                            </div>
-                    }
+                    <div className={
+                        ` statusOrder ${item.is_completed === "COMPLETED" ? "statusOrder complete" : ""}
+                                ${item.is_completed == "FALSE" ? "statusOrder nocomplete" : ""}
+                                ${item.is_completed == "PICKED" ? "statusOrder bg-orange-400" : ""}
+                            `}>
+                        {
+                            item.is_completed == "COMPLETED" ?
+                                <>
+                                    <h4>completed</h4>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                                    </svg>
+                                </>
+                                : <>
+                                    {
+                                        item.is_completed == "PICKED" ?
+                                            <>
+                                                <h4>you can pick up your order</h4>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check-circle" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                    <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                                                </svg>
+                                                </>
+                                            :
+                                            <>
+                                                <h4>No completed</h4>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+                                                </svg>
+                                            </>
+                                    }
+                                </>
+                        }
+                    </div>
                     {`Time ${new Date(item.orders_time).getHours()}:${new Date(item.orders_time).getMinutes()}`}
                 </div>
             ))}
