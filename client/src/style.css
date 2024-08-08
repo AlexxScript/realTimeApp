@@ -153,7 +153,7 @@ body {
 
 .mainContent {
   width: 80vw;
-  margin: 40px auto 0 auto;
+  margin: 70px auto 0 auto;
   /* display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -171,13 +171,15 @@ body {
 /* ------------------------------PROFILE PAGE---------------------- */
 
 .profileC {
+  width: 30%;
   display: flex;
   margin: 90px auto 0 auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 15px;
-  border: solid 3px var(--mainColor);
+  border: solid 3px #fff;
+  box-shadow: 0px 0px 10px 0px #8e8e8eee;
   border-radius: 20px;
 }
 

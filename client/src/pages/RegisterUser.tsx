@@ -5,7 +5,7 @@ import { FormRegisterUser } from '../components/FormRegisterUser';
 
 export const RegisterUser = () => {
     return (
-        <div>
+        <div className='my-16'>
             <FormRegisterUser/>
             <FormKeyCafe/>
         </div>
